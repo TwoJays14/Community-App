@@ -23,27 +23,27 @@ class Book {
 
     static async getOneByID(id) {
         const response = await db.query("SELECT * FROM books WHERE book_id = $1;", [id]);
-        if (response.rows.length === 0) {
+        if (response.rows.length != 1) {
             throw new Error("That book is not available.")
         }
-        return response
+        return response.rows.map(b => new Book(b));
     }
 
     static async getOneByTitle(title) {
         const response = await db.query("SELECT * FROM books WHERE LOWER(title) = $1;", [title]);
-        if (response.rows.length === 0) {
+        if (response.rows.length != 0) {
             throw new Error("That book is not available.")
         }
-        return response;
+        return response.rows.map(b => new Book(b));
     }
 
 
     static async getOneByISBN(isbn) {
         const response = await db.query("SELECT * FROM books WHERE isbn = $1;", [isbn]);
-        if (response.rows.length === 0) {
+        if (response.rows.length != 1) {
             throw new Error("That book is not available.")
         }
-        return response
+        return response.rows.map(b => new Book(b));
     }
 
     static async create (data) {
@@ -54,9 +54,9 @@ class Book {
         return new Book(newBook)
     }
 
-    async update (data) {
+     async update (data) {
         const response = await db.query("UPDATE books SET title = $1, author = $2, publisher = $3, isbn = $4, num_pages = $5, publish_date = $6, available_books = $7 WHERE book_id = $8 RETURNING *;", 
-        [data.title, data.author, data.publisher, data.isbn, data.num_pages, data.publish_date, data.available_books, this.id])
+        [data.title, data.author, data.publisher, data.isbn, data.num_pages, data.publish_date, data.available_books, this.book_id])
         if (response.rows.length != 1) {
             throw new Error ("Unable to update book")
         }
@@ -65,18 +65,12 @@ class Book {
     }
 
     async destroy() {
-        const response = await db.query("DELETE FROM book WHERE id = $1 RETURNING *", [this.id])
-        return new Book(response.rows[0])
-      }
-
-    // static async getAllByAuthor(authorName) {
-    //     const response = await db.query("SELECT * FROM books b JOIN book_author a ON b.book_id = a.book_id WHERE a.author_name = $1;", [authorName]);
-    //     if (response.rows.length === 0) {
-    //         throw new Error("No books available.")
-    //     }
-    //     return response.rows.map(b => new book(b));
-    // }
-
+        const response = await db.query('DELETE FROM books WHERE book_id = $1 RETURNING *;', [this.book_id]);
+        if (response.rows.length != 1) {
+            throw new Error("Unable to delete book.")
+        }
+        return new Book(response.rows[0]);
+    }
 
 }
 
