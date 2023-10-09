@@ -8,8 +8,8 @@
     <script defer src="index.js"></script>
     <title>Document</title>
   </head>
-  <body class="bg-slate-400">
-    <section>
+  <body class="bg-slate-400 h-[100vh]">
+    <section class="w-full mx-auto">
       <h3 class="text-xl uppercase text-center mb-3">start for free</h3>
       <h1 class="capitalize font-bold text-3xl text-center mb-3">
         create new account
@@ -19,15 +19,43 @@
       </h4>
 
       <form class="flex flex-col">
-        <label class="text-center">First Name</label
-        ><input type="text" name="first-name" id="first-name" />
-        <label class="text-center">Last Name</label
-        ><input type="text" name="second-name" id="second-name" />
-        <label class="text-center">Email</label
-        ><input type="text" name="email" id="email" />
-        <label class="text-center">Password</label
-        ><input type="password" name="password" id="password" />
-        <button class="" type="submit">Create Account</button>
+        <input
+          class="w-3/6 mx-auto mb-3 p-3 rounded-xl"
+          type="text"
+          name="first-name"
+          id="first-name"
+          placeholder="First Name"
+        />
+
+        <input
+          type="text"
+          name="second-name"
+          id="second-name"
+          placeholder="Last Name"
+          class="w-3/6 mx-auto mb-3 p-3 rounded-xl"
+        />
+
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Email Address"
+          class="w-3/6 mx-auto mb-3 p-3 rounded-xl"
+        />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="w-3/6 mx-auto mb-3 p-3 rounded-xl"
+        />
+        <button
+          class="py-4 px-2 bg-white w-3/6 mx-auto rounded-xl"
+          type="submit"
+        >
+          Create Account
+        </button>
       </form>
     </section>
   </body>
