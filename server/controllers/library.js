@@ -56,7 +56,7 @@ async function update (req, res) {
         const id = parseInt(req.params.id)
         const data = req.body
         const book = await Book.getOneByID(id)
-        const result = await book.update(data)
+        const result = await book.update(data, id);
         res.status(200).json(result)
     } catch (err) {
         res.status(404).json({error: err.message})
@@ -71,7 +71,7 @@ async function destroy (req, res) {
         res.status(204).json(result);
     } catch (err) {
         res.status(404).json({error: err.message})
-    }
+    }   
 }
 
 module.exports = { index, showID, showTitle, showISBN, create, update, destroy }

@@ -26,7 +26,7 @@ class Book {
         if (response.rows.length === 0) {
             throw new Error("That book is not available.")
         }
-        return response
+        return response.rows.map(b => new Book(b));
     }
 
     static async getOneByTitle(title) {
@@ -34,7 +34,7 @@ class Book {
         if (response.rows.length === 0) {
             throw new Error("That book is not available.")
         }
-        return response;
+        return response.rows.map(b => new Book(b));
     }
 
 
@@ -43,7 +43,7 @@ class Book {
         if (response.rows.length === 0) {
             throw new Error("That book is not available.")
         }
-        return response
+        return response.rows.map(b => new Book(b));
     }
 
     static async create (data) {
@@ -54,9 +54,10 @@ class Book {
         return new Book(newBook)
     }
 
-    async update (data) {
+    async update (data, id) {
+        const {title, author, publisher, isbn, num_pages, publish_date, available_books} = data
         const response = await db.query("UPDATE books SET title = $1, author = $2, publisher = $3, isbn = $4, num_pages = $5, publish_date = $6, available_books = $7 WHERE book_id = $8 RETURNING *;", 
-        [data.title, data.author, data.publisher, data.isbn, data.num_pages, data.publish_date, data.available_books, this.id])
+        [title, author, publisher, isbn, num_pages, publish_date, available_books, id])
         if (response.rows.length != 1) {
             throw new Error ("Unable to update book")
         }
