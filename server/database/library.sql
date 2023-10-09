@@ -1,39 +1,19 @@
 DROP TABLE IF EXISTS token;
-DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS reserved_books;
 DROP TABLE IF EXISTS user_account;
 DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS publisher;
-
-
-
-
-CREATE TABLE publisher (
-    publisher_id INT GENERATED ALWAYS AS IDENTITY,
-    publisher_name VARCHAR NOT NULL,
-    PRIMARY KEY (publisher_id)
-);
 
 CREATE TABLE books (
-    books_id INT GENERATED ALWAYS AS IDENTITY,
+    book_id INT GENERATED ALWAYS AS IDENTITY,
     title VARCHAR NOT NULL,
-    ISBN VARCHAR NOT NULL,
+    author VARCHAR NOT NULL,
+    publisher VARCHAR NOT NULL,
+    isbn VARCHAR NOT NULL,
     num_pages INT, 
-    publish_date DATE,
-    publisher_id INT NOT NULL, 
+    publish_date DATE, 
     available_books INT NOT NULL,
-    reserved BOOLEAN NOT NULL,
-    PRIMARY KEY (books_id),
-    FOREIGN KEY (publisher_id) REFERENCES publisher("publisher_id")
-);
-
-
-CREATE TABLE book_author (
-    author_id INT GENERATED ALWAYS AS IDENTITY,
-    book_id INT NOT NULL,
-    author_name VARCHAR NOT NULL,
-    PRIMARY KEY (author_id),
-    FOREIGN KEY (book_id) REFERENCES books("books_id")
+    reserved BOOLEAN NOT NULL DEFAULT false,
+    PRIMARY KEY (book_id)
 );
 
 CREATE TABLE user_account (
@@ -50,9 +30,8 @@ CREATE TABLE reserved_books (
     user_id INT NOT NULL,
     PRIMARY KEY (reserve_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
-    FOREIGN KEY (book_id) REFERENCES books("books_id")
+    FOREIGN KEY (book_id) REFERENCES books("book_id")
 );
-
 
 
 CREATE TABLE token (
@@ -62,3 +41,6 @@ CREATE TABLE token (
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id") 
 );
+
+INSERT INTO books (title, author, publisher, isbn, num_pages, publish_date, available_books)
+VALUES ('A Brief History of Time', 'Stephen Hawking', 'Bantam', '978-0553176988', 272, '1989-03-01', 2);
