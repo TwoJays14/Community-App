@@ -5,35 +5,18 @@ DROP TABLE IF EXISTS user_account;
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS publisher;
 
-
-
-
-CREATE TABLE publisher (
-    publisher_id INT GENERATED ALWAYS AS IDENTITY,
-    publisher_name VARCHAR NOT NULL,
-    PRIMARY KEY (publisher_id)
-);
-
 CREATE TABLE books (
     books_id INT GENERATED ALWAYS AS IDENTITY,
     title VARCHAR NOT NULL,
+    author VARCHAR NOT NULL,
+    publisher VARCHAR NOT NULL,
     ISBN VARCHAR NOT NULL,
     num_pages INT, 
     publish_date DATE,
     publisher_id INT NOT NULL, 
     available_books INT NOT NULL,
     reserved BOOLEAN NOT NULL,
-    PRIMARY KEY (books_id),
-    FOREIGN KEY (publisher_id) REFERENCES publisher("publisher_id")
-);
-
-
-CREATE TABLE book_author (
-    author_id INT GENERATED ALWAYS AS IDENTITY,
-    book_id INT NOT NULL,
-    author_name VARCHAR NOT NULL,
-    PRIMARY KEY (author_id),
-    FOREIGN KEY (book_id) REFERENCES books("books_id")
+    PRIMARY KEY (books_id)
 );
 
 CREATE TABLE user_account (
