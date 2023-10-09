@@ -1,6 +1,7 @@
 const db = require('../database/connect')
 
 class Book {
+
     constructor({book_id, title, author, publisher, isbn, num_pages, publish_date, available_books, reserved}) {
          this.book_id = book_id
          this.title = title
@@ -80,4 +81,8 @@ class Book {
 
 }
 
-module.exports = Book;
+
+}
+
+module.exports = Book
+
