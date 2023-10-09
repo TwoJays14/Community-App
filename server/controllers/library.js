@@ -57,6 +57,7 @@ async function update (req, res) {
         const id = parseInt(req.params.id)
         const data = req.body
         const book = await Book.getOneByID(id)
+        console.log(book)
         const result = await book.update(data)
         res.status(200).json(result)
     } catch (err) {
