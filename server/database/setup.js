@@ -2,7 +2,9 @@ require('dotenv').config();
 const fs = require('fs');
 const db = require('./connect');
 
-const sql = fs.readFileSync('./database/library.sql').toString();
+
+const sql = fs.readFileSync(__dirname + '/library.sql').toString();
+
 
 db.query(sql)
   .then(data => {
