@@ -59,7 +59,6 @@ async function update (req, res) {
         const book = await Book.getOneByID(id)
         console.log(book)
         const result = await book.update(data)
-        console.log(result)
         res.status(200).json(result)
     } catch (err) {
         res.status(404).json({error: err.message})
