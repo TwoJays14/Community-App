@@ -1,9 +1,12 @@
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS publisher;
+DROP TABLE IF EXISTS token;
 DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS reserved_books;
 DROP TABLE IF EXISTS user_account;
-DROP TABLE IF EXISTS token;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS publisher;
+
+
+
 
 CREATE TABLE publisher (
     publisher_id INT GENERATED ALWAYS AS IDENTITY,
