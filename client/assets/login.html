@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <script defer src="index.js"></script>
+    <title>Login</title>
+  </head>
+  <body
+    class="bg-slate-400 h-[100vh] bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]"
+  >
+    <section class="h-full max-w-2xl mx-auto flex flex-col justify-center">
+      <h3 class="text-xl uppercase text-center mb-3">start for free</h3>
+      <h1 class="capitalize font-bold text-3xl text-center mb-3">
+        create new account
+      </h1>
+      <h4 class="capitalize text-center mb-3">
+        already a member?
+        <a class="capitalize text-indigo-500" href="login.html">log in</a>
+      </h4>
+
+      <form class="flex flex-col w-full">
+        <input
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+          type="text"
+          name="first-name"
+          id="first-name"
+          placeholder="First Name"
+        />
+
+        <input
+          type="text"
+          name="second-name"
+          id="second-name"
+          placeholder="Last Name"
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+        />
+
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Email Address"
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+        />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+        />
+        <button
+          class="bg-indigo-500 py-4 px-2 text-white mx-auto rounded-xl w-full"
+          type="submit"
+        >
+          Create Account
+        </button>
+      </form>
+    </section>
+  </body>
+</html>
