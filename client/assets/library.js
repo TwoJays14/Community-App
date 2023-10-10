@@ -1,30 +1,12 @@
 'use strict';
 
-let books = {
-  data: [
-    {
-      bookName: "Sing a Black Girl's Song",
-      category: 'Non-Fiction',
-      price: '19.99',
-      image:
-        'https://contentcafe2.btol.com/ContentCafe/Jacket.aspx?userID=GWH11030&password=CC64392&Value=9780306828515&content=L&Return=1&Type=L',
-    },
-    {
-      bookName: "Sing a Black Girl's Song",
-      category: 'Non-Fiction',
-      price: '19.99',
-      image:
-        'https://contentcafe2.btol.com/ContentCafe/Jacket.aspx?userID=GWH11030&password=CC64392&Value=9780306828515&content=L&Return=1&Type=L',
-    },
-    {
-      bookName: "Sing a Black Girl's Song",
-      category: 'Non-Fiction',
-      price: '19.99',
-      image:
-        'https://contentcafe2.btol.com/ContentCafe/Jacket.aspx?userID=GWH11030&password=CC64392&Value=9780306828515&content=L&Return=1&Type=L',
-    },
-  ],
+const getData = async () => {
+  const res = await fetch('http://localhost:3000/library');
+  const data = await res.json();
+  console.log(data);
 };
+
+getData();
 
 for (let i of books.data) {
   let card = document.createElement('div');
