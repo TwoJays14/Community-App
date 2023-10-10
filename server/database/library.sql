@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS books;
 CREATE TABLE books (
     book_id INT GENERATED ALWAYS AS IDENTITY,
     title VARCHAR NOT NULL,
-    author VARCHAR NOT NULL,
-    publisher VARCHAR NOT NULL,
-    isbn VARCHAR NOT NULL,
+    author VARCHAR,
+    publisher VARCHAR,
+    isbn VARCHAR,
     num_pages INT, 
     publish_date DATE, 
     available_books INT NOT NULL,

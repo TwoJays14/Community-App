@@ -11,7 +11,7 @@ bookRouter.get("/isbn/:isbn", bookController.showISBN);
 bookRouter.post("/", bookController.create)
 bookRouter.patch("/:id", bookController.update)
 bookRouter.delete("/:id", bookController.destroy)
-
+bookRouter.post("/title/:title", bookController.showGoogle)
 
 
 
