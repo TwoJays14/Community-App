@@ -100,6 +100,6 @@ async function showGoogle (req, res){
 
 
 
-module.exports = { index, showID, showTitle, showISBN, create, update, destroy, showGoogle }
+module.exports = { index, showID, showTitle, showISBN, create, update, destroy, showGoogle, category }
 
 
