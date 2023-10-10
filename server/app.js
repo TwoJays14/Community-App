@@ -2,8 +2,10 @@ require('dotenv').config()
 const apiKey = process.env.apiKey
 const express = require('express');
 const cors = require('cors');
-const libraryRouter = require('./routers/library');
 const logger = require('morgan');
+
+const libraryRouter = require('./routers/library');
+const userRouter = require('./routers/user');
 
 const app = express();
 
@@ -12,6 +14,7 @@ app.use(logger('dev'))
 app.use(express.json());
 
 app.use('/library', libraryRouter);
+app.use("/users", userRouter)
 
 app.get('/', (req, res) => res.send('Hello there!'))
 app.post('/', (req, res) => res.status(405).send('Not allowed!'))

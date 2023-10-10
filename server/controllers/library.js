@@ -10,6 +10,16 @@ async function index(req, res) {
   }
 }
 
+async function category (req, res) {
+    try {
+        const category = req.params.category.toLowerCase()
+        const book = await Book.getAllByCategory(category)
+        res.status(200).json(book)
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 
 async function showID (req, res) {
     try {
