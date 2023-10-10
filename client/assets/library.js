@@ -8,11 +8,11 @@ const getAdult = document.getElementById('adult');
 const getChild = document.getElementById('child');
 
 const books = document.getElementById('books');
+const search = document.getElementById('search');
 
 const getData = async () => {
   const res = await fetch('http://localhost:3000/library');
   const data = await res.json();
-  console.log(data);
 
   displayAllBooks(data);
 };
@@ -28,39 +28,47 @@ const displayAllBooks = (data) => {
   books.innerHTML = allData.join('');
 };
 
+getData();
+
 const filterBook = async (value) => {
   let buttons = document.querySelectorAll('#buttons button');
   buttons.forEach((button) => {
-    if (value.toUpperCase() == button.innerText.toUpperCase()) {
+    if (value.toLowerCase() == button.innerText.toLowerCase()) {
       button.classList.add('active');
     } else {
       button.classList.remove('active');
     }
   });
 
-  const res = await fetch(`http://localhost:3000/library/category/${value}`);
-  const data = await res.json();
-  console.log(data);
+  if (value === 'All') {
+    let allButton = document.querySelector('#all');
+    allButton.classList.add('active');
+    getData();
+  } else {
+    const res = await fetch(`http://localhost:3000/library/category/${value}`);
+    const data = await res.json();
+    console.log(data);
 
-  let elements = document.querySelectorAll('#bookList');
-  console.log(elements);
-
-  elements.forEach((el) => {
-    if (value == 'all') {
-      el.classList.remove('hide');
-    } else {
-      if (el.classList.contains(value)) {
-        el.classList.remove('hide');
-      } else {
-        el.classList.add('hide');
-      }
-    }
-  });
+    const filteredData = data.filter(
+      (d) => d.category.toLowerCase() === value.toLowerCase()
+    );
+    displayFilteredBooks(filteredData);
+  }
 };
 
-getAll.addEventListener('click', () => {
-  filterBook('all');
-});
+const displayFilteredBooks = (data) => {
+  const allData = data.map((d) => {
+    return `
+  <div id='bookList' class="cursor-pointer" data-id=${d.book_id}>
+    <h2 class="book-name">${d.title}</h2>
+    <p>${d.author}</p>
+  </div>`;
+  });
+
+  books.innerHTML = allData.join('');
+};
+
+getAll.addEventListener('click', () => filterBook('All'));
 getBook.addEventListener('click', () => filterBook('Book'));
 getScience.addEventListener('click', () => filterBook('science'));
 getFiction.addEventListener('click', () => filterBook('Fiction'));
@@ -69,5 +77,36 @@ getAdult.addEventListener('click', () => filterBook('Adult'));
 getChild.addEventListener('click', () => filterBook('Child'));
 
 window.onload = () => {
-  filterBook('All');
+  filterBook('all');
 };
+
+search.addEventListener('click', () => {
+  console.log('button clicked');
+  let searchInput = document.getElementById('search-input').value.trim();
+
+  let filteredHTML = '';
+
+  let cards = document.querySelectorAll('#bookList');
+
+  cards.forEach(async (card) => {
+    const title = card.innerText.toLowerCase();
+
+    if (title.includes(searchInput.toLowerCase())) {
+      console.log(`search includes ${searchInput}`);
+      const res = await fetch(
+        `http://localhost:3000/library/title/${encodeURIComponent(searchInput)}`
+      );
+      const data = await res.json();
+      console.log(data);
+
+      const bookHTML = `<div id='bookList' class="cursor-pointer" data-id=${data.book_id}>
+        <h2 class="book-name">${data.title}</h2>
+        <p>${data.author}</p>
+      </div>`;
+
+      filteredHTML += bookHTML;
+
+      books.innerHTML = filteredHTML;
+    }
+  });
+});
