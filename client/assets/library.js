@@ -1,14 +1,19 @@
 'use strict';
+
 const getAll = document.getElementById('all');
-const getBook = document.getElementById('book');
+const getHorror = document.getElementById('horror');
 const getScience = document.getElementById('science');
 const getFiction = document.getElementById('fiction');
-const getNonFiction = document.getElementById('non-fiction');
-const getAdult = document.getElementById('adult');
+const getClassic = document.getElementById('classic');
+const getFantasy = document.getElementById('fantasy');
 const getChild = document.getElementById('child');
 
 const books = document.getElementById('books');
 const search = document.getElementById('search');
+const searchInput = document.getElementById('search-input');
+const modal = document.getElementById('modal');
+
+// fetch all books and display
 
 const getData = async () => {
   const res = await fetch('http://localhost:3000/library');
@@ -16,6 +21,8 @@ const getData = async () => {
 
   displayAllBooks(data);
 };
+
+// Display all books
 
 const displayAllBooks = (data) => {
   const allData = data.map((d) => {
@@ -25,10 +32,22 @@ const displayAllBooks = (data) => {
       <p>${d.author}</p>
     </div>`;
   });
+
   books.innerHTML = allData.join('');
+
+  const bookList = document.querySelectorAll('#bookList');
+  bookList.forEach((book) => {
+    book.addEventListener('click', async () => {
+      const { id } = book.dataset;
+      const res = await fetch(`http://localhost:3000/library/${id}`);
+      const data = await res.json();
+
+      displayModal(data);
+    });
+  });
 };
 
-getData();
+// Filtering Logic
 
 const filterBook = async (value) => {
   let buttons = document.querySelectorAll('#buttons button');
@@ -40,14 +59,14 @@ const filterBook = async (value) => {
     }
   });
 
-  if (value === 'All') {
+  if (value === 'all') {
     let allButton = document.querySelector('#all');
     allButton.classList.add('active');
     getData();
+    return;
   } else {
     const res = await fetch(`http://localhost:3000/library/category/${value}`);
     const data = await res.json();
-    console.log(data);
 
     const filteredData = data.filter(
       (d) => d.category.toLowerCase() === value.toLowerCase()
@@ -66,47 +85,98 @@ const displayFilteredBooks = (data) => {
   });
 
   books.innerHTML = allData.join('');
+
+  const bookList = document.querySelectorAll('#bookList');
+  bookList.forEach((book) => {
+    book.addEventListener('click', async () => {
+      const { id } = book.dataset;
+      const res = await fetch(`http://localhost:3000/library/${id}`);
+      const data = await res.json();
+
+      displayModal(data);
+    });
+  });
 };
 
-getAll.addEventListener('click', () => filterBook('All'));
-getBook.addEventListener('click', () => filterBook('Book'));
-getScience.addEventListener('click', () => filterBook('science'));
-getFiction.addEventListener('click', () => filterBook('Fiction'));
-getNonFiction.addEventListener('click', () => filterBook('Non-Fiction'));
-getAdult.addEventListener('click', () => filterBook('Adult'));
-getChild.addEventListener('click', () => filterBook('Child'));
+// Search Feature
+
+search.addEventListener('click', async (e) => {
+  let searchInput = document
+    .getElementById('search-input')
+    .value.trim()
+    .toLowerCase();
+
+  let filteredHTML = '';
+
+  const res = await fetch('http://localhost:3000/library');
+  const data = await res.json();
+
+  data.forEach(async (card) => {
+    const title = card.title.toLowerCase();
+
+    if (title.includes(searchInput.toLowerCase())) {
+      const res = await fetch(
+        `http://localhost:3000/library/title/${encodeURIComponent(searchInput)}`
+      );
+      const data = await res.json();
+
+      const bookHTML = `<div id='bookList' class="cursor-pointer" data-id=${data.book_id}>
+        <h2 class="book-name">${data.title}</h2>
+        <p>${data.author}</p>
+        </div>`;
+
+      filteredHTML += bookHTML;
+
+      books.innerHTML = filteredHTML;
+
+      const bookList = document.querySelectorAll('#bookList');
+      bookList.forEach((book) => {
+        book.addEventListener('click', async () => {
+          const { id } = book.dataset;
+          const res = await fetch(`http://localhost:3000/library/${id}`);
+          const data = await res.json();
+
+          displayModal(data);
+        });
+      });
+    }
+  });
+});
+
+// Modal
+
+const displayModal = (data) => {
+  modal.innerHTML = `
+  <div class="modal-content bg-white my-[10%] mx-auto p-5 border-2 border-slate-500 w-4/5 max-w-2xl relative">
+          <span class="close absolute top-0 right-0 p-3 cursor-pointer">&times;</span>
+          <div>
+           <h2>${data.title}</h2>
+            <h4>${data.author}</h4>
+          </div>
+          
+        </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  modal.style.display = 'block';
+
+  const closeModal = modal.querySelector('.close');
+  closeModal.addEventListener('click', () => {
+    document.body.removeChild(modal);
+  });
+};
+
+// Global functions
 
 window.onload = () => {
   filterBook('all');
 };
 
-search.addEventListener('click', () => {
-  console.log('button clicked');
-  let searchInput = document.getElementById('search-input').value.trim();
-
-  let filteredHTML = '';
-
-  let cards = document.querySelectorAll('#bookList');
-
-  cards.forEach(async (card) => {
-    const title = card.innerText.toLowerCase();
-
-    if (title.includes(searchInput.toLowerCase())) {
-      console.log(`search includes ${searchInput}`);
-      const res = await fetch(
-        `http://localhost:3000/library/title/${encodeURIComponent(searchInput)}`
-      );
-      const data = await res.json();
-      console.log(data);
-
-      const bookHTML = `<div id='bookList' class="cursor-pointer" data-id=${data.book_id}>
-        <h2 class="book-name">${data.title}</h2>
-        <p>${data.author}</p>
-      </div>`;
-
-      filteredHTML += bookHTML;
-
-      books.innerHTML = filteredHTML;
-    }
-  });
-});
+getAll.addEventListener('click', () => filterBook('all'));
+getHorror.addEventListener('click', () => filterBook('Horror'));
+getScience.addEventListener('click', () => filterBook('Science'));
+getFiction.addEventListener('click', () => filterBook('Fiction'));
+getClassic.addEventListener('click', () => filterBook('classic'));
+getFantasy.addEventListener('click', () => filterBook('Fantasy'));
+getChild.addEventListener('click', () => filterBook('Child'));
