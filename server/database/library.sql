@@ -12,6 +12,7 @@ CREATE TABLE books (
     isbn VARCHAR NOT NULL,
     num_pages INT, 
     publish_date DATE, 
+    book_Image VARCHAR, 
     available_books INT NOT NULL,
     reserved BOOLEAN NOT NULL DEFAULT false,
     PRIMARY KEY (book_id)
