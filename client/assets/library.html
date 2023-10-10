@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <script defer src="library.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="w-11/12 mx-auto">
+      <div class="my-4 mx-0" id="search-container">
+        <input
+          class="bg-transparent w-2/5 border-b-2 border-[#110f29] py-4 px-1 focus:border-indigo-500 focus:outline-none"
+          type="search"
+          name="search-input"
+          id="search-input"
+          placeholder="Search book name here..."
+        />
+        <button
+          class="py-4 px-8 bg-indigo-500 text-white rounded-md mt-2"
+          id="search"
+        >
+          Search
+        </button>
+      </div>
+      <div id="buttons">
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          All
+        </button>
+        <button
+          class="border-2 cursor-pointer border-indigo-500 py-4 px-9 rounded-full text-indigo-500"
+        >
+          Book
+        </button>
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          e-Book
+        </button>
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          Fiction
+        </button>
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          Non-Fiction
+        </button>
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          Adult
+        </button>
+        <button
+          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+        >
+          Child
+        </button>
+      </div>
+      <div
+        class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 py-8 px-0"
+        id="books"
+      ></div>
+    </div>
+  </body>
+</html>

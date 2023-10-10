@@ -7,6 +7,7 @@ CREATE TABLE books (
     book_id INT GENERATED ALWAYS AS IDENTITY,
     title VARCHAR NOT NULL,
     author VARCHAR,
+    category VARCHAR,
     publisher VARCHAR,
     isbn VARCHAR,
     num_pages INT, 
@@ -20,7 +21,6 @@ CREATE TABLE user_account (
     user_id INT GENERATED ALWAYS AS IDENTITY,
     username VARCHAR UNIQUE NOT NULL,
     password CHAR(60) NOT NULL,
-    book_id INT NOT NULL,
     PRIMARY KEY (user_id)
 );
 
@@ -42,5 +42,5 @@ CREATE TABLE token (
     FOREIGN KEY (user_id) REFERENCES user_account("user_id") 
 );
 
-INSERT INTO books (title, author, publisher, isbn, num_pages, publish_date, available_books)
-VALUES ('A Brief History of Time', 'Stephen Hawking', 'Bantam', '978-0553176988', 272, '1989-03-01', 2);
+INSERT INTO books (title, author, category, publisher, isbn, num_pages, publish_date, available_books)
+VALUES ('A Brief History of Time', 'Stephen Hawking', 'Science', 'Bantam', '978-0553176988', 272, '1989-03-01', 2);

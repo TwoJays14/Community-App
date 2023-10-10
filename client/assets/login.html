@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <script defer src="login.js"></script>
+    <title>Login</title>
+  </head>
+  <body
+    class="bg-slate-400 h-[100vh] bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]"
+  >
+    <section class="h-full max-w-2xl mx-auto flex flex-col justify-center">
+      <h2 class="text-3xl uppercase text-center mb-3">
+        welcome to florin city library
+      </h2>
+      <h1 class="capitalize font-bold text-3xl text-center mb-3">login</h1>
+      <h4 class="capitalize text-center mb-3">
+        Don't have an account?
+        <a class="capitalize text-indigo-500" href="register.html">sign up</a>
+      </h4>
+
+      <form id="login" class="flex flex-col w-full">
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+        />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="mx-auto mb-3 p-3 rounded-xl w-full"
+        />
+        <button
+          class="bg-indigo-500 py-4 px-2 text-white mx-auto rounded-xl w-full"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
+    </section>
+  </body>
+</html>
