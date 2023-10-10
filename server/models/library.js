@@ -1,11 +1,12 @@
 const db = require('../database/connect')
 
 class Book {
-    constructor({book_id, title, author, publisher, isbn, num_pages, publish_date, available_books, reserved}) {
+    constructor({book_id, title, author, publisher, category, isbn, num_pages, publish_date, available_books, reserved}) {
          this.book_id = book_id
          this.title = title
          this.author = author
          this.publisher = publisher
+         this.category = category
          this.isbn = isbn
          this.num_pages = num_pages
          this.publish_date = publish_date
@@ -15,6 +16,14 @@ class Book {
 
     static async getAll() {
         const response = await db.query("SELECT * FROM books ORDER BY title;")
+        if (response.rows.length === 0) {
+            throw new Error("No books available.")
+        }
+        return response.rows.map(b => new Book(b));
+    }
+
+    static async getAllByCategory(category) {
+        const response = await db.query("SELECT * FROM books WHERE LOWER(category) = $1;", [category])
         if (response.rows.length === 0) {
             throw new Error("No books available.")
         }
@@ -47,8 +56,8 @@ class Book {
     }
 
     static async create (data) {
-        const {title, author, publisher, isbn, num_pages, publish_date, available_books} = data
-        const response = await db.query('INSERT INTO books (title, author, publisher, isbn, num_pages, publish_date, available_books) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [title, author, publisher, isbn, num_pages, publish_date, available_books])
+        const {title, author, category, publisher, isbn, num_pages, publish_date, available_books} = data
+        const response = await db.query('INSERT INTO books (title, author, category, publisher, isbn, num_pages, publish_date, available_books) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [title, author, category, publisher, isbn, num_pages, publish_date, available_books])
         const id = response.rows[0].book_id
         const newBook = await Book.getOneByID(id)
         return new Book(newBook)

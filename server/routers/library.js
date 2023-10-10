@@ -5,6 +5,7 @@ const bookController = require('../controllers/library.js');
 const bookRouter = Router();
 
 bookRouter.get("/",bookController.index);
+bookRouter.get("/category/:category", bookController.category)
 bookRouter.get("/:id",bookController.showID);
 bookRouter.get("/title/:title",bookController.showTitle);
 bookRouter.get("/isbn/:isbn", bookController.showISBN);

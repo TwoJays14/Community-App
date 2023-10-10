@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
     <link href="../dist/output.css" rel="stylesheet" />
-    <script defer src="index.js"></script>
+    <script defer src="register.js"></script>
     <title>Login</title>
   </head>
   <body
@@ -18,33 +18,19 @@
       </h1>
       <h4 class="capitalize text-center mb-3">
         already a member?
-        <a class="capitalize text-indigo-500" href="login.html">log in</a>
+        <a class="capitalize text-indigo-500" href="./login.html">log in</a>
       </h4>
 
-      <form class="flex flex-col w-full">
+      <form id="sign-up" class="flex flex-col w-full">
+      
         <input
           class="mx-auto mb-3 p-3 rounded-xl w-full"
           type="text"
-          name="first-name"
-          id="first-name"
-          placeholder="First Name"
+          name="username"
+          id="username"
+          placeholder="Username"
         />
-
-        <input
-          type="text"
-          name="second-name"
-          id="second-name"
-          placeholder="Last Name"
-          class="mx-auto mb-3 p-3 rounded-xl w-full"
-        />
-
-        <input
-          type="text"
-          name="email"
-          id="email"
-          placeholder="Email Address"
-          class="mx-auto mb-3 p-3 rounded-xl w-full"
-        />
+      
 
         <input
           type="password"
@@ -53,6 +39,7 @@
           placeholder="Password"
           class="mx-auto mb-3 p-3 rounded-xl w-full"
         />
+    
         <button
           class="bg-indigo-500 py-4 px-2 text-white mx-auto rounded-xl w-full"
           type="submit"
