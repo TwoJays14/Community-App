@@ -40,7 +40,7 @@ class Book {
 
     static async getOneByTitle(title) {
         const response = await db.query("SELECT * FROM books WHERE LOWER(title) = $1;", [title]);
-        if (response.rows.length != 0) {
+        if (response.rows.length != 1) {
             throw new Error("That book is not available.")
         }
         return new Book(response.rows[0]);
