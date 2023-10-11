@@ -147,7 +147,7 @@ class Book {
   }
 
 async reserveBook () {
-  const response = await db.query("UPDATE books SET available_books = available_books -1, reserved = true WHERE reserved = false AND book_id = $1 RETURNING book_id, available_books, reserved;",
+  const response = await db.query("UPDATE books SET available_books = available_books -1, reserved = true, WHERE reserved = false AND book_id = $1 RETURNING *;",
          [this.book_id ]);
     if (response.rows.length != 1) {
         throw new Error("Unable to update books.")
@@ -159,7 +159,7 @@ async reserveBook () {
 }
 
 async returnBook () {
-  const response = await db.query("UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING book_id, available_books, reserved;",
+  const response = await db.query("UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING *;",
       [ this.book_id ]);
   if (response.rows.length != 1) {
       throw new Error("Unable to update books.")
@@ -189,11 +189,10 @@ async returnBook () {
     if (response.rows.length != 1) {
       throw new Error('Unable to delete book.');
     }
+
+    return new Book(response.rows[0]);
   }
 }
-  
-
-
 
 
 module.exports = Book;

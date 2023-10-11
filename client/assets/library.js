@@ -128,8 +128,9 @@ searchInput.addEventListener('input', async (e) => {
 
   const filteredData = data.filter((book) => {
     const title = book.title.toLowerCase();
+    const author = book.author.toLowerCase();
 
-    return title.includes(searchValue);
+    return title.includes(searchValue) || author.includes(searchValue);
   });
 
   displaySearchedBooks(filteredData);
@@ -218,7 +219,7 @@ const displayModal = (data) => {
             <p>${data.reserved}</p>
             </div>
 
-            <button id="reserve-btn" class="py-2 px-6 bg-indigo-500 text-white">Reserve</button> 
+            <button id="reserve-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Reserve</button> 
           </div>
           
         </div>
@@ -234,8 +235,31 @@ const displayModal = (data) => {
   });
 
   // Reserve Button Functionality
+  const reserveButton = document.querySelector('#reserve-btn');
 
-  
+  reserveButton.addEventListener('click', async () => {
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { id } = reserveButton.dataset;
+    console.log(id);
+    const res = await fetch(
+      `http://localhost:3000/library/reserve/${id}`,
+      options
+    );
+    const data = await res.json();
+    console.log(data);
+
+    if (res.status == 200) {
+      console.log('succesfully reserved book');
+      displayModal(data);
+    }
+  });
 };
 
 // Global functions
