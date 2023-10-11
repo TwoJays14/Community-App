@@ -1,5 +1,5 @@
 const db = require('../database/connect')
-require("dotenv").config()
+const Book = require('../models/library')
 
 class Reserve {
     constructor({reserve_id, book_id, user_id}) {
@@ -8,9 +8,8 @@ class Reserve {
         this.user_id = user_id
     }
 
-    static async create (data) {
-        const { book_id } = data
-        const response = await db.query("INSERT INTO reserved_books (book_id) SELECT book_id FROM books WHERE reserved = true;", [book_id])
+    static async create () {
+        const response = await db.query("INSERT INTO reserved_books (book_id) SELECT book_id FROM books WHERE reserved = true RETURNING book_id;")
         return new Reserve(response)
     }
 } 

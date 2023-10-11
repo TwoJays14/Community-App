@@ -67,13 +67,57 @@ async function update (req, res) {
         const id = parseInt(req.params.id)
         const data = req.body
         const book = await Book.getOneByID(id)
-        console.log(book)
         const result = await book.update(data)
         res.status(200).json(result)
     } catch (err) {
         res.status(404).json({error: err.message})
     }
 }
+
+async function reserve (req, res) {
+    try {
+        const id = parseInt(req.params.id)
+        const data = req.body
+        const book = await Book.getOneByID(id)
+        const result = await book.reserveBook(data)
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(404).json({error: err.message})
+    }
+}
+
+async function returnBook (req, res) {
+    try {
+        const id = parseInt(req.params.id)
+        const data = req.body
+        const book = await Book.getOneByID(id)
+        const result = await book.returnBook(data)
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(404).json({error: err.message})
+    }
+}
+
+// async function newUser (res, req) {
+//     try {
+//         const user = await Book.updateUser()
+//         res.status(200).json(user)
+//     } catch (err) {
+//         res.status(500).json({error: err.message})
+//     }
+// }
+
+// async function isReserved (req, res) {
+//     try {
+//         const id = parseInt(req.params.id)
+//         const data = req.body
+//         const book = await Book.getOneByID(id)
+//         const result = await book.isReserved(data)
+//         res.status(200).json(result)
+//     } catch (err) {
+//         res.status(404).json({error: err.message})
+//     }
+// }
 
 async function destroy (req, res) {
     try {
@@ -86,20 +130,5 @@ async function destroy (req, res) {
     }   
 }
 
-async function showGoogle (req, res){
-    try{
-        console.log("Controller Working.")
-        const title = req.params.title.toString()
-        console.log(title)
-        const book = await Book.googleSearch(title)
-        res.status(201).json(book)
-    } catch (err){
-        res.status(404).json({error: err.message})
-    }
-}
 
-
-
-module.exports = { index, showID, category, showTitle, showISBN, create, update, destroy, showGoogle }
-
-
+module.exports = { index, showID, category, showTitle, showISBN, create, update, reserve, returnBook, destroy }

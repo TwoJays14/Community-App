@@ -1,10 +1,18 @@
 DROP TABLE IF EXISTS token;
 DROP TABLE IF EXISTS reserved_books;
-DROP TABLE IF EXISTS user_account;
 DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS user_account;
+
+CREATE TABLE user_account (
+    user_id INT GENERATED ALWAYS AS IDENTITY,
+    username VARCHAR UNIQUE NOT NULL,
+    password CHAR(60) NOT NULL,
+    PRIMARY KEY (user_id)
+);
 
 CREATE TABLE books (
     book_id INT GENERATED ALWAYS AS IDENTITY,
+    user_id INT,
     title VARCHAR NOT NULL,
     author VARCHAR,
     publisher VARCHAR,
@@ -15,20 +23,14 @@ CREATE TABLE books (
     book_Image VARCHAR, 
     available_books INT NOT NULL,
     reserved BOOLEAN NOT NULL DEFAULT false,
-    PRIMARY KEY (book_id)
-);
-
-CREATE TABLE user_account (
-    user_id INT GENERATED ALWAYS AS IDENTITY,
-    username VARCHAR UNIQUE NOT NULL,
-    password CHAR(60) NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (book_id),
+    FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
 
 CREATE TABLE reserved_books (
     reserve_id INT GENERATED ALWAYS AS IDENTITY,
     book_id INT NOT NULL,
-    user_id INT NOT NULL,
+    user_id INT,
     PRIMARY KEY (reserve_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
     FOREIGN KEY (book_id) REFERENCES books("book_id")
@@ -51,7 +53,8 @@ INSERT INTO books (
     isbn,
     num_pages,
     publish_date,
-    available_books
+    available_books, 
+    reserved
   )
 VALUES (
     'A Brief History of Time',
@@ -61,7 +64,8 @@ VALUES (
     '978-0553176988',
     272,
     '1989-03-01',
-    2
+    2,
+    true
   ),
 (
     'A Brief History of Time',
@@ -71,7 +75,8 @@ VALUES (
     '978-0553176988',
     272,
     '1989-03-01',
-    2
+    2,
+    false
   ),
   (
     'The Great Gatsby',
@@ -81,7 +86,8 @@ VALUES (
     '978-0743273565',
     180,
     '1925-04-10',
-    3
+    3,
+    true
   ),
   (
     'To Kill a Mockingbird',
@@ -91,7 +97,8 @@ VALUES (
     '978-0061120084',
     336,
     '1960-07-11',
-    4
+    4,
+    false
   ),
   (
     'Cosmos',
@@ -101,7 +108,8 @@ VALUES (
     '978-0345539434',
     384,
     '1980-10-12',
-    2
+    2,
+    true
   ),
   (
     'Harry Potter and the Sorcerer''s Stone',
@@ -111,7 +119,8 @@ VALUES (
     '978-0439708180',
     309,
     '1997-06-26',
-    5
+    5,
+    false
   ),
   (
     '1984',
@@ -121,7 +130,8 @@ VALUES (
     '978-0451524935',
     328,
     '1949-06-08',
-    2
+    2,
+    false
   ), (
     'The Catcher in the Rye',
     'J.D. Salinger',
@@ -130,7 +140,8 @@ VALUES (
     '978-0316769488',
     224,
     '1951-07-16',
-    3
+    3,
+    false
   ),
   (
     'The Hobbit',
@@ -140,7 +151,8 @@ VALUES (
     '978-0618002214',
     310,
     '1937-09-21',
-    4
+    4,
+    false
   ),
   (
     'The Alchemist',
@@ -150,7 +162,8 @@ VALUES (
     '978-0061122415',
     197,
     '1988-01-01',
-    2
+    2,
+    false
   ),
   (
     'The Da Vinci Code',
@@ -160,7 +173,8 @@ VALUES (
     '978-0385504201',
     454,
     '2003-03-18',
-    5
+    5,
+    false
   ),
   (
     'The Hunger Games',
@@ -170,7 +184,8 @@ VALUES (
     '978-0439023481',
     374,
     '2008-09-14',
-    3
+    3,
+    false
   ),
   (
     'Pride and Prejudice',
@@ -180,7 +195,8 @@ VALUES (
     '978-0141439518',
     279,
     '1813-01-28',
-    4
+    4,
+    false
   ),
   (
     'The Road',
@@ -190,7 +206,8 @@ VALUES (
     '978-0307265432',
     241,
     '2006-09-26',
-    2
+    2,
+    false
   ),
   (
     'The Shining',
@@ -200,7 +217,8 @@ VALUES (
     '978-0385121675',
     447,
     '1977-01-28',
-    3
+    3,
+    false
   ),
   (
     'The Lord of the Rings',
@@ -210,7 +228,8 @@ VALUES (
     '978-0544003415',
     1178,
     '1954-07-29',
-    4
+    4,
+    false
   ),
   (
     'Harry Potter and the Deathly Hallows',
@@ -220,5 +239,6 @@ VALUES (
     '978-0545139700',
     607,
     '2007-07-21',
-    5
+    5,
+    false
   );
