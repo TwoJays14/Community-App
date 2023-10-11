@@ -1,12 +1,12 @@
 'use strict';
 
 const getAll = document.getElementById('all');
-const getHorror = document.getElementById('horror');
+const getNature = document.getElementById('nature');
 const getScience = document.getElementById('science');
 const getFiction = document.getElementById('fiction');
-const getClassic = document.getElementById('classic');
+const getBMS = document.getElementById('BMS');
 const getFantasy = document.getElementById('fantasy');
-const getChild = document.getElementById('child');
+const getHistory = document.getElementById('history');
 
 const books = document.getElementById('books');
 const search = document.getElementById('search');
@@ -28,7 +28,7 @@ const displayAllBooks = (data) => {
   const allData = data.map((d) => {
     return `
     <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center" data-id=${d.book_id}>
-      <img class="w-full" src=${d.book_image} alt="book cover"/>
+      <img class="w-full object-cover" src=${d.book_image} alt="book cover"/>
       <h2>${d.title}</h2>
       <p>${d.author}</p>
     </div>`;
@@ -80,7 +80,7 @@ const displayFilteredBooks = (data) => {
   const allData = data.map((d) => {
     return `
   <div id='bookList' class="cursor-pointer" data-id=${d.book_id}>
-  <img src=${d.book_image} alt="book cover"/>
+  <img class="object-cover w-full" src=${d.book_image} alt="book cover"/>
     <h2 class="book-name">${d.title}</h2>
     <p>${d.author}</p>
   </div>`;
@@ -142,7 +142,7 @@ function displaySearchedBooks(data) {
   data.forEach((book) => {
     const bookHTML = `
       <div id='bookList' class="cursor-pointer" data-id=${book.book_id}>
-        <img class="w-full" src=${book.book_image} alt="book cover"/>
+        <img class="w-full object-cover" src=${book.book_image} alt="book cover"/>
         <h2 class="book-name">${book.title}</h2>
         <p>${book.author}</p>
       </div>
@@ -171,7 +171,9 @@ const displayModal = (data) => {
   <div class="modal-content flex flex-col  bg-white mx-auto p-5 border-2 border-slate-500 max-w-2xl relative">
           <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
           <div class="flex flex-col ">
-          <img class="w-3/6 mx-auto" src=${data.book_image} alt="book cover"/>
+          <img class="w-3/6 mx-auto object-cover" src=${
+            data.book_image
+          } alt="book cover"/>
 
           <div class="flex flex-col items-center">
             <h2 class="font-bold">Book Title</h2>
@@ -214,13 +216,14 @@ const displayModal = (data) => {
             <p>${data.available_books}</p>
             </div>
 
-            <div class="flex flex-col items-center">
-            <h2 class="font-bold">Reserve Status</h2>
-            <p>${data.reserved}</p>
-            </div>
 
-            <button id="reserve-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Reserve</button> 
-          </div>
+          ${
+            data.reserved
+              ? `
+              <button id="return-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Return</button>
+              `
+              : `<button id="reserve-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Reserve</button>`
+          }
           
         </div>
   `;
@@ -236,30 +239,61 @@ const displayModal = (data) => {
 
   // Reserve Button Functionality
   const reserveButton = document.querySelector('#reserve-btn');
+  if (reserveButton) {
+    reserveButton.addEventListener('click', async () => {
+      const options = {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
 
-  reserveButton.addEventListener('click', async () => {
-    const options = {
-      method: 'PATCH',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    };
+      const { id } = reserveButton.dataset;
+      console.log(id);
+      const res = await fetch(
+        `http://localhost:3000/library/reserve/${id}`,
+        options
+      );
+      const data = await res.json();
+      console.log(data);
 
-    const { id } = reserveButton.dataset;
-    console.log(id);
-    const res = await fetch(
-      `http://localhost:3000/library/reserve/${id}`,
-      options
-    );
-    const data = await res.json();
-    console.log(data);
+      if (res.status == 200) {
+        console.log('succesfully reserved book');
+        displayModal(data);
+      }
+    });
+  }
+  // Return Button Functionality
+  const returnButton = document.querySelector('#return-btn');
 
-    if (res.status == 200) {
-      console.log('succesfully reserved book');
-      displayModal(data);
-    }
-  });
+  if (returnButton) {
+    returnButton.addEventListener('click', async () => {
+      console.log('button clicked');
+
+      const options = {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { id } = returnButton.dataset;
+      console.log(id);
+      const res = await fetch(
+        `http://localhost:3000/library/return/${id}`,
+        options
+      );
+      const data = await res.json();
+      console.log(data);
+
+      if (res.status == 200) {
+        console.log('succesfully returned book');
+        displayModal(data);
+      }
+    });
+  }
 };
 
 // Global functions
@@ -269,9 +303,9 @@ window.onload = () => {
 };
 
 getAll.addEventListener('click', () => filterBook('all'));
-getHorror.addEventListener('click', () => filterBook('Horror'));
+getNature.addEventListener('click', () => filterBook('nature'));
 getScience.addEventListener('click', () => filterBook('Science'));
 getFiction.addEventListener('click', () => filterBook('Fiction'));
-getClassic.addEventListener('click', () => filterBook('classic'));
+getBMS.addEventListener('click', () => filterBook('Body, Mind & Spirit'));
 getFantasy.addEventListener('click', () => filterBook('Fantasy'));
-getChild.addEventListener('click', () => filterBook('Child'));
+getHistory.addEventListener('click', () => filterBook('History'));
