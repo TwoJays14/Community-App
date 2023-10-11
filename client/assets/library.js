@@ -147,7 +147,7 @@ search.addEventListener('click', async (e) => {
 
 const displayModal = (data) => {
   modal.innerHTML = `
-  <div class="modal-content bg-white my-[10%] mx-auto p-5 border-2 border-slate-500 w-4/5 max-w-2xl relative">
+  <div class="modal-content bg-white mx-auto  p-5 border-2 border-slate-500 w-4/5 max-w-2xl relative">
           <span class="close absolute top-0 right-0 p-3 cursor-pointer">&times;</span>
           <div>
            <h2>${data.title}</h2>
