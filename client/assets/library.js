@@ -102,20 +102,34 @@ const displayFilteredBooks = (data) => {
 
 // Search Feature
 
-search.addEventListener('click', async (e) => {
-  let searchInput = document
-    .getElementById('search-input')
-    .value.trim()
-    .toLowerCase();
+search.addEventListener('click', async () => {
+  let searchInput = document.getElementById('search-input').value.trim();
 
   const res = await fetch(`http://localhost:3000/library`);
   const data = await res.json();
 
   const filteredData = data.filter((book) => {
     const title = book.title.toLowerCase();
-    const ISBN = book.isbn;
+    const author = book.author.toLowerCase();
 
-    return title.includes(searchInput) || ISBN.includes(searchInput);
+    return title.includes(searchInput) || author.includes(searchInput);
+  });
+
+  displaySearchedBooks(filteredData);
+});
+
+// Live Search Feature
+
+searchInput.addEventListener('input', async (e) => {
+  const searchValue = e.target.value.trim().toLowerCase();
+
+  const res = await fetch(`http://localhost:3000/library/`);
+  const data = await res.json();
+
+  const filteredData = data.filter((book) => {
+    const title = book.title.toLowerCase();
+
+    return title.includes(searchValue);
   });
 
   displaySearchedBooks(filteredData);
@@ -127,7 +141,7 @@ function displaySearchedBooks(data) {
   data.forEach((book) => {
     const bookHTML = `
       <div id='bookList' class="cursor-pointer" data-id=${book.book_id}>
-        <img src=${book.book_image} alt="book cover"/>
+        <img class="w-full" src=${book.book_image} alt="book cover"/>
         <h2 class="book-name">${book.title}</h2>
         <p>${book.author}</p>
       </div>
@@ -153,12 +167,57 @@ function displaySearchedBooks(data) {
 
 const displayModal = (data) => {
   modal.innerHTML = `
-  <div class="modal-content bg-white mx-auto p-5 border-2 border-slate-500 w-3/6 max-w-2xl relative">
+  <div class="modal-content flex flex-col  bg-white mx-auto p-5 border-2 border-slate-500 max-w-2xl relative">
           <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
-          <div class="flex flex-col justify-center items-center">
-          <img class="w-full" src=${data.book_image} alt="book cover"/>
-           <h2>${data.title}</h2>
-            <h4>${data.author}</h4>
+          <div class="flex flex-col ">
+          <img class="w-3/6 mx-auto" src=${data.book_image} alt="book cover"/>
+
+          <div class="flex flex-col items-center">
+            <h2 class="font-bold">Book Title</h2>
+            <p>${data.title}</p>
+           </div>
+
+           <div class="flex flex-col items-center">
+            <h2 class="font-bold">Author</h2>
+            <p>${data.author}</p>
+            </div>
+            
+            <div class="flex flex-col  items-center">
+            <h2 class="font-bold">Category</h2>
+            <p>${data.category}</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">Publisher</h2>
+            <p>${data.publisher}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">ISBN</h2>
+            <p>${data.isbn}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">Number of Pages</h2>
+            <p>${data.num_pages}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">Publish Date</h2>
+            <p>${data.publish_date}</p>
+            </div>
+            
+            
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">Available Books</h2>
+            <p>${data.available_books}</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+            <h2 class="font-bold">Reserve Status</h2>
+            <p>${data.reserved}</p>
+            </div>
+
             <button id="reserve-btn" class="py-2 px-6 bg-indigo-500 text-white">Reserve</button> 
           </div>
           
