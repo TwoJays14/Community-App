@@ -152,44 +152,17 @@ class Book {
     if (response.rows.length != 1) {
       throw new Error('Unable to delete book.');
     }
-    return new Book(response.rows[0]);
-  }
 
-  static async googleSearch(data) {
-    const {
-      title,
-      author,
-      publisher,
-      isbn,
-      num_pages,
-      publish_date,
-      available_books,
-    } = data;
-    const apiData = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${category}&maxResults=40&key=${apiKey}`
-    );
-    const response = await apiData.json();
-    const items = response.items;
-    console.log(title);
-
-    for (const book of items) {
-      console.log(book);
-
-      let title = book.volumeInfo.title;
-      let author = book.volumeInfo.authors;
-      let publisher = book.volumeInfo.publisher;
-      // let isbn = book.volumeInfo.industryIdentifiers.identifier;
-      let num_pages = book.volumeInfo.pageCount;
-      // let publish_date = book.volumeInfo.publishedDate;
-      let available_books = 2;
-      await db.query(
-        'INSERT INTO books (title, author, publisher, num_pages, available_books) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [title, author, publisher, num_pages, available_books]
-      );
-      // new Book(query)
-      // Book.create(title, author, publisher, isbn, num_pages, publish_date, available_books)
+    async destroy() {
+        const response = await db.query('DELETE FROM books WHERE book_id = $1 RETURNING *;', [this.book_id]);
+        if (response.rows.length != 1) {
+            throw new Error("Unable to delete book.")
+        }
+        return new Book(response.rows[0]);
     }
-  }
 }
+
+
+
 
 module.exports = Book;
