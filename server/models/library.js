@@ -84,38 +84,9 @@ class Book {
         }
         return new Book(response.rows[0]);
     }
-
-   static async googleSearch(data){
-    const { title, author, category, publisher, isbn, num_pages, publish_date, available_books } = data
-    let search = "bro"
-    const apiData = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40&key=${apiKey}`)
-    const response = await apiData.json()
-    const items = response.items
-    console.log(title)
- 
-
-    for (const book of items){
-        console.log(book)
-        
-
-        let title = book.volumeInfo.title;
-        let author = book.volumeInfo.authors || null
-        let category = book.volumeInfo.categories || null
-        let publisher = book.volumeInfo.publisher || null
-        //let isbn = book.volumeInfo.industryIdentifiers.identifier || null
-        let num_pages = book.volumeInfo.pageCount || null
-        //let publish_date = book.volumeInfo.publishedDate || null
-        let available_books = 2;
-        await db.query('INSERT INTO books (title, author, category, publisher, num_pages, available_books) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', 
-        [title, author, category, publisher, num_pages, available_books])
-        // new Book(query)
-        // Book.create(title, author, publisher, isbn, num_pages, publish_date, available_books)
-
-    }
-    
-   }
-
 }
+
+
 
 module.exports = Book
 

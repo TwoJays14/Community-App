@@ -86,20 +86,10 @@ async function destroy (req, res) {
     }   
 }
 
-async function showGoogle (req, res){
-    try{
-        console.log("Controller Working.")
-        const title = req.params.title.toString()
-        console.log(title)
-        const book = await Book.googleSearch(title)
-        res.status(201).json(book)
-    } catch (err){
-        res.status(404).json({error: err.message})
-    }
-}
 
 
 
-module.exports = { index, showID, showTitle, showISBN, create, update, destroy, showGoogle, category }
+
+module.exports = { index, showID, showTitle, showISBN, create, update, destroy, category }
 
 
