@@ -3,18 +3,18 @@ DROP TABLE IF EXISTS reserved_books;
 DROP TABLE IF EXISTS user_account;
 DROP TABLE IF EXISTS books;
 CREATE TABLE books (
-  book_id INT GENERATED ALWAYS AS IDENTITY,
-  title VARCHAR NOT NULL,
-  author VARCHAR,
-  publisher VARCHAR,
-  category VARCHAR,
-  isbn VARCHAR,
-  num_pages INT,
-  publish_date DATE,
-  book_Image VARCHAR,
-  available_books INT NOT NULL,
-  reserved BOOLEAN NOT NULL DEFAULT false,
-  PRIMARY KEY (book_id)
+    book_id INT GENERATED ALWAYS AS IDENTITY,
+    title VARCHAR NOT NULL,
+    author VARCHAR,
+    category VARCHAR,
+    publisher VARCHAR,
+    isbn VARCHAR,
+    num_pages INT, 
+    publish_date DATE, 
+    book_image VARCHAR, 
+    available_books INT NOT NULL,
+    reserved BOOLEAN NOT NULL DEFAULT false,
+    PRIMARY KEY (book_id)
 );
 CREATE TABLE user_account (
   user_id INT GENERATED ALWAYS AS IDENTITY,
