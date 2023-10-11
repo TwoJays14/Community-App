@@ -15,36 +15,38 @@ CREATE TABLE books (
     user_id INT,
     title VARCHAR NOT NULL,
     author VARCHAR,
-    publisher VARCHAR,
     category VARCHAR,
+    publisher VARCHAR,
     isbn VARCHAR,
     num_pages INT, 
     publish_date DATE, 
-    book_Image VARCHAR, 
+    book_image VARCHAR, 
     available_books INT NOT NULL,
     reserved BOOLEAN NOT NULL DEFAULT false,
     PRIMARY KEY (book_id),
     FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
-
+CREATE TABLE user_account (
+  user_id INT GENERATED ALWAYS AS IDENTITY,
+  username VARCHAR UNIQUE NOT NULL,
+  password CHAR(60) NOT NULL,
+  PRIMARY KEY (user_id)
+);
 CREATE TABLE reserved_books (
-    reserve_id INT GENERATED ALWAYS AS IDENTITY,
-    book_id INT NOT NULL,
-    user_id INT,
-    PRIMARY KEY (reserve_id),
-    FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
-    FOREIGN KEY (book_id) REFERENCES books("book_id")
+  reserve_id INT GENERATED ALWAYS AS IDENTITY,
+  book_id INT NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (reserve_id),
+  FOREIGN KEY (user_id) REFERENCES user_account("user_id"),
+  FOREIGN KEY (book_id) REFERENCES books("book_id")
 );
-
-
 CREATE TABLE token (
-    token_id INT GENERATED ALWAYS AS IDENTITY,
-    user_id INT NOT NULL, 
-    token CHAR(36) UNIQUE NOT NULL,
-    PRIMARY KEY (token_id),
-    FOREIGN KEY (user_id) REFERENCES user_account("user_id") 
+  token_id INT GENERATED ALWAYS AS IDENTITY,
+  user_id INT NOT NULL,
+  token CHAR(36) UNIQUE NOT NULL,
+  PRIMARY KEY (token_id),
+  FOREIGN KEY (user_id) REFERENCES user_account("user_id")
 );
-
 INSERT INTO books (
     title,
     author,
@@ -54,7 +56,8 @@ INSERT INTO books (
     num_pages,
     publish_date,
     available_books, 
-    reserved
+    reserved,
+    book_Image
   )
 VALUES (
     'A Brief History of Time',
@@ -65,9 +68,10 @@ VALUES (
     272,
     '1989-03-01',
     2,
-    true
+    true,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
-(
+  (
     'A Brief History of Time',
     'Stephen Hawking',
     'Science',
@@ -76,7 +80,8 @@ VALUES (
     272,
     '1989-03-01',
     2,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Great Gatsby',
@@ -88,6 +93,7 @@ VALUES (
     '1925-04-10',
     3,
     true
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'To Kill a Mockingbird',
@@ -98,7 +104,8 @@ VALUES (
     336,
     '1960-07-11',
     4,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'Cosmos',
@@ -109,7 +116,9 @@ VALUES (
     384,
     '1980-10-12',
     2,
-    true
+    true,
+
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'Harry Potter and the Sorcerer''s Stone',
@@ -120,7 +129,8 @@ VALUES (
     309,
     '1997-06-26',
     5,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     '1984',
@@ -131,8 +141,10 @@ VALUES (
     328,
     '1949-06-08',
     2,
-    false
-  ), (
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
+  ),
+  (
     'The Catcher in the Rye',
     'J.D. Salinger',
     'Fiction',
@@ -141,7 +153,8 @@ VALUES (
     224,
     '1951-07-16',
     3,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Hobbit',
@@ -152,7 +165,8 @@ VALUES (
     310,
     '1937-09-21',
     4,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg',
   ),
   (
     'The Alchemist',
@@ -163,7 +177,8 @@ VALUES (
     197,
     '1988-01-01',
     2,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Da Vinci Code',
@@ -174,7 +189,8 @@ VALUES (
     454,
     '2003-03-18',
     5,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Hunger Games',
@@ -185,7 +201,8 @@ VALUES (
     374,
     '2008-09-14',
     3,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'Pride and Prejudice',
@@ -196,7 +213,8 @@ VALUES (
     279,
     '1813-01-28',
     4,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Road',
@@ -208,6 +226,7 @@ VALUES (
     '2006-09-26',
     2,
     false
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'The Shining',
@@ -218,7 +237,8 @@ VALUES (
     447,
     '1977-01-28',
     3,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg',
   ),
   (
     'The Lord of the Rings',
@@ -229,7 +249,8 @@ VALUES (
     1178,
     '1954-07-29',
     4,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   ),
   (
     'Harry Potter and the Deathly Hallows',
@@ -240,5 +261,6 @@ VALUES (
     607,
     '2007-07-21',
     5,
-    false
+    false,
+    'https://productimages.worldofbooks.com/0857501003.jpg'
   );
