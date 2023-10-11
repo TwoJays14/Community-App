@@ -146,40 +146,48 @@ class Book {
     return new Book(response.rows[0]);
   }
 
+
 async reserveBook () {
   const response = await db.query("UPDATE books SET available_books = available_books -1, reserved = true WHERE reserved = false AND book_id = $1 RETURNING *;",
-         [this.book_id ]);
+         [this.book_id]);
+
     if (response.rows.length != 1) {
-        throw new Error("Unable to update books.")
+      throw new Error('Unable to update books.');
     } else if (this.available_books <= 0) {
+
       throw new Error("Unable to reserve as no books available")
     } 
 
-    return new Book(response.rows[0]);
-}
 
-async returnBook () {
-  const response = await db.query("UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING *;",
-      [ this.book_id ]);
-  if (response.rows.length != 1) {
-      throw new Error("Unable to update books.")
-  } else if (this.available_books >= 10) {
-    throw new Error("Unable to return book because all books have been returned ")
+    return new Book(response.rows[0]);
   }
 
-  return new Book(response.rows[0]);
-}
+  async returnBook() {
+    const response = await db.query(
+      'UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING *;',
+      [this.book_id]
+    );
+    if (response.rows.length != 1) {
+      throw new Error('Unable to update books.');
+    } else if (this.available_books >= 10) {
+      throw new Error(
+        'Unable to return book because all books have been returned '
+      );
+    }
 
-// async isReserved () {
-//   const response = await db.query("UPDATE books set reserved = NOT reserved WHERE book_id = $1;", [this.book_id])
-//   return new Book(response)
+    return new Book(response.rows[0]);
+  }
 
-// }
+  // async isReserved () {
+  //   const response = await db.query("UPDATE books set reserved = NOT reserved WHERE book_id = $1;", [this.book_id])
+  //   return new Book(response)
 
-// async updateUser () {
-//   const response = await db.query("UPDATE books AS b SET b.user_id = user_account.user_id FROM account_name AS u WHERE b.user_id = u.user_id;")
-//   return new Book(response)
-// }
+  // }
+
+  // async updateUser () {
+  //   const response = await db.query("UPDATE books AS b SET b.user_id = user_account.user_id FROM account_name AS u WHERE b.user_id = u.user_id;")
+  //   return new Book(response)
+  // }
 
   async destroy() {
     const response = await db.query(
@@ -193,6 +201,5 @@ async returnBook () {
     return new Book(response.rows[0]);
   }
 }
-
 
 module.exports = Book;
