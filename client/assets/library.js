@@ -232,6 +232,10 @@ const displayModal = (data) => {
   closeModal.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
+
+  // Reserve Button Functionality
+
+  
 };
 
 // Global functions
