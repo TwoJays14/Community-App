@@ -144,6 +144,15 @@ class Book {
     return new Book(response.rows[0]);
   }
 
+  async destroy() {
+    const response = await db.query(
+      'DELETE FROM books WHERE book_id = $1 RETURNING *;',
+      [this.book_id]
+    );
+    if (response.rows.length != 1) {
+      throw new Error('Unable to delete book.');
+    }
+
     async destroy() {
         const response = await db.query('DELETE FROM books WHERE book_id = $1 RETURNING *;', [this.book_id]);
         if (response.rows.length != 1) {
@@ -152,6 +161,7 @@ class Book {
         return new Book(response.rows[0]);
     }
 }
+
 
 
 

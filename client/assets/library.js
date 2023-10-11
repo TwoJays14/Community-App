@@ -27,8 +27,8 @@ const getData = async () => {
 const displayAllBooks = (data) => {
   const allData = data.map((d) => {
     return `
-    <div id='bookList' class="cursor-pointer" data-id=${d.book_id}>
-      <img src=${d.book_image} alt="book cover"/>
+    <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center" data-id=${d.book_id}>
+      <img class="w-full" src=${d.book_image} alt="book cover"/>
       <h2>${d.title}</h2>
       <p>${d.author}</p>
     </div>`;
@@ -153,10 +153,10 @@ function displaySearchedBooks(data) {
 
 const displayModal = (data) => {
   modal.innerHTML = `
-  <div class="modal-content bg-white mx-auto  p-5 border-2 border-slate-500 w-4/5 max-w-2xl relative">
-          <span class="close absolute top-0 right-0 p-3 cursor-pointer">&times;</span>
+  <div class="modal-content bg-white mx-auto p-5 border-2 border-slate-500 w-3/6 max-w-2xl relative">
+          <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
           <div class="flex flex-col justify-center items-center">
-          <img src=${data.book_image} alt="book cover"/>
+          <img class="w-full" src=${data.book_image} alt="book cover"/>
            <h2>${data.title}</h2>
             <h4>${data.author}</h4>
             <button id="reserve-btn" class="py-2 px-6 bg-indigo-500 text-white">Reserve</button> 
