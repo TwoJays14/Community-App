@@ -19,6 +19,7 @@
           placeholder="Search book name here..."
         />
         <button
+          type="submit"
           class="py-4 px-8 bg-indigo-500 text-white rounded-md mt-2"
           id="search"
         >
@@ -33,10 +34,10 @@
           All
         </button>
         <button
-          id="book"
-          class="border-2 cursor-pointer border-indigo-500 py-4 px-9 rounded-full text-indigo-500"
+          id="horror"
+          class="capitalize border-2 cursor-pointer border-indigo-500 py-4 px-9 rounded-full text-indigo-500"
         >
-          Book
+          horror
         </button>
         <button
           id="science"
@@ -51,16 +52,16 @@
           Fiction
         </button>
         <button
-          id="non-fiction"
-          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+          id="classic"
+          class="capitalize border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
         >
-          Non-Fiction
+          classic
         </button>
         <button
-          id="adult"
-          class="border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
+          id="fantasy"
+          class="capitalize border-2 border-indigo-500 py-4 px-9 rounded-full text-indigo-500 cursor-pointer"
         >
-          Adult
+          fantasy
         </button>
         <button
           id="child"
@@ -72,6 +73,12 @@
       <div
         class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 py-8 px-0"
         id="books"
+      ></div>
+
+      <!-- Modal -->
+      <div
+        id="modal"
+        class="modal hidden fixed z-10 left-0 top-0 w-screen h-screen overflow-auto bg-[rgba(0,0,0,0.7)]"
       ></div>
     </div>
   </body>
