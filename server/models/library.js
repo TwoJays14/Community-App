@@ -92,11 +92,9 @@ class Book {
     const items = response.items
     console.log(title)
  
-
     for (const book of items){
         console.log(book)
         
-
         let title = book.volumeInfo.title;
         let author = book.volumeInfo.authors;
         let publisher = book.volumeInfo.publisher;
@@ -108,7 +106,6 @@ class Book {
         [title, author, publisher, num_pages, available_books])
         // new Book(query)
         // Book.create(title, author, publisher, isbn, num_pages, publish_date, available_books)
-
     }
     
    }
