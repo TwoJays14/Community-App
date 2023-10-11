@@ -5,6 +5,7 @@ const apiKey = process.env.apiKey;
 class Book {
   constructor({
     book_id,
+    user_id,
     title,
     author,
     publisher,
@@ -17,6 +18,7 @@ class Book {
     reserved,
   }) {
     this.book_id = book_id;
+    this.user_id = user_id;
     this.title = title;
     this.author = author;
     this.publisher = publisher;
@@ -144,6 +146,41 @@ class Book {
     return new Book(response.rows[0]);
   }
 
+async reserveBook () {
+  const response = await db.query("UPDATE books SET available_books = available_books -1, reserved = true WHERE reserved = false AND book_id = $1 RETURNING book_id, available_books, reserved;",
+         [this.book_id ]);
+    if (response.rows.length != 1) {
+        throw new Error("Unable to update books.")
+    } else if (this.available_books <= 0) {
+      throw new Error("Unable to reserve as no books available")
+    }
+
+    return new Book(response.rows[0]);
+}
+
+async returnBook () {
+  const response = await db.query("UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING book_id, available_books, reserved;",
+      [ this.book_id ]);
+  if (response.rows.length != 1) {
+      throw new Error("Unable to update books.")
+  } else if (this.available_books >= 10) {
+    throw new Error("Unable to return book because all books have been returned ")
+  }
+
+  return new Book(response.rows[0]);
+}
+
+// async isReserved () {
+//   const response = await db.query("UPDATE books set reserved = NOT reserved WHERE book_id = $1;", [this.book_id])
+//   return new Book(response)
+
+// }
+
+// async updateUser () {
+//   const response = await db.query("UPDATE books AS b SET b.user_id = user_account.user_id FROM account_name AS u WHERE b.user_id = u.user_id;")
+//   return new Book(response)
+// }
+
   async destroy() {
     const response = await db.query(
       'DELETE FROM books WHERE book_id = $1 RETURNING *;',
@@ -153,6 +190,13 @@ class Book {
       throw new Error('Unable to delete book.');
     }
 
+    return new Book(response.rows[0]);
+  }
+}
+
+
+
+
     async destroy() {
         const response = await db.query('DELETE FROM books WHERE book_id = $1 RETURNING *;', [this.book_id]);
         if (response.rows.length != 1) {
@@ -161,8 +205,6 @@ class Book {
         return new Book(response.rows[0]);
     }
 }
-
-
 
 
 module.exports = Book;
