@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 const getAll = document.getElementById('all');
 const getHorror = document.getElementById('horror');
