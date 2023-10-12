@@ -101,7 +101,6 @@ const displayFilteredBooks = (data) => {
 };
 
 // Search Feature
-
 search.addEventListener('click', async () => {
   let searchInput = document.getElementById('search-input').value.trim();
 
@@ -264,17 +263,18 @@ const displayModal = (data) => {
 
       if (res.status == 200) {
         console.log('succesfully reserved book');
+        reservedBooks.push(data);
+        localStorage.setItem('reserved', JSON.stringify(reservedBooks));
         displayModal(data);
       }
     });
   }
+
   // Return Button Functionality
   const returnButton = document.querySelector('#return-btn');
 
   if (returnButton) {
     returnButton.addEventListener('click', async () => {
-      console.log('button clicked');
-
       const options = {
         method: 'PATCH',
         headers: {
@@ -284,7 +284,7 @@ const displayModal = (data) => {
       };
 
       const { id } = returnButton.dataset;
-      console.log(id);
+
       const res = await fetch(
         `http://localhost:3000/library/return/${id}`,
         options
@@ -294,11 +294,19 @@ const displayModal = (data) => {
 
       if (res.status == 200) {
         console.log('succesfully returned book');
+        const bookId = data.book_id;
+        const updatedReservedBooks = reservedBooks.filter(
+          (book) => book.book_id !== bookId
+        );
+        reservedBooks = updatedReservedBooks;
+        localStorage.setItem('reserved', JSON.stringify(reservedBooks));
         displayModal(data);
       }
     });
   }
 };
+
+let reservedBooks = [];
 
 // Global functions
 
@@ -314,5 +322,4 @@ getBMS.addEventListener('click', () => filterBook('Body, Mind & Spirit'));
 getFantasy.addEventListener('click', () => filterBook('Fantasy'));
 getHistory.addEventListener('click', () => filterBook('History'));
 
-// export { displayModal, displayFilteredBooks, filterBook };
 // things to do 1) add more fetches from google books api to have 40 results for each category of book 2) Display reserved books on user page 3) Add headers and footers to all pages linking site together 4) Styling 5)Testing 6) Presentation 7) Wireframeing
