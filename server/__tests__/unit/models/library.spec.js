@@ -120,7 +120,7 @@ describe('findOneByISBN', () => {
       jest.spyOn(db, 'query').mockRejectedValue()
 
       try {
-        await Book.getOneByTitle('red')
+        await Book.getOneByISBN('red')
       } catch (err) {
         expect(err).toBeDefined()
         expect(err.message).toBe("That book is not available.")
@@ -130,10 +130,11 @@ describe('findOneByISBN', () => {
 
 describe('create', () => {
     it('resolves with goat on successful db query', async () => {
-        let testBook = {title: 'b1', author: 'a1', category: 'c1', publisher: 'p1', isbn: 'i1', num_pages: 1, publish_date: 1, available_books: 1, reserved: false}
+        let testBook = {title: 'b1', author: 'a1', category: 'c1', book_description: 'd1', publisher: 'p1', isbn: 'i1', num_pages: 1, publish_date: 1, available_books: 1, reserved: false}
       jest.spyOn(db, 'query')
-        .mockResolvedValueOnce({ rows: [{ ...testBook, book_id: 1 }] });
+        .mockResolvedValueOnce({ rows: [{ ...testBook }] });
 
+      console.log(testBook)
       const result = await Book.create(testBook);
       expect(result).toBeTruthy()
       expect(result).toHaveProperty('book_id')
@@ -155,11 +156,13 @@ describe('create', () => {
     it('resolves with books when successful', async () => 
     {jest.spyOn(db, 'query')
         .mockResolvedValueOnce({
-            rows: [{ title: 'b1', author: 'a1', category: 'c1', publisher: 'p1', isbn: 'i1', num_pages: 1, publish_date: 1, available_books: 1, reserved: false}, { title: 'b2', author: 'a2', category: 'c1', publisher: 'p2', isbn: 'i2', num_pages: 2, publish_date: 2, available_books: 2, reserved: false},  {title: 'b3', author: 'a3', category: 'c2', publisher: 'p3', isbn: 'i3', num_pages: 3, publish_date: 3, available_books: 3, reserved: false}]
+            rows: [{ title: 'b1', author: 'a1', category: 'c', publisher: 'p1', isbn: 'i1', num_pages: 1, publish_date: 1, available_books: 1, reserved: false}, 
+            { title: 'b2', author: 'a2', category: 'c', publisher: 'p2', isbn: 'i2', num_pages: 2, publish_date: 2, available_books: 2, reserved: false},  
+            {title: 'b3', author: 'a3', category: 'D', publisher: 'p3', isbn: 'i3', num_pages: 3, publish_date: 3, available_books: 3, reserved: false}]
         }) 
 
-        const books = await Book.getAllByCategory('c1')
-        expect(books).toHaveLength(1)
+        const books = await Book.getAllByCategory('c')
+        expect(books).toHaveLength(2) 
         expect(books[0]).toHaveProperty('book_id')
     })
 
