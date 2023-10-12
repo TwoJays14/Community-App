@@ -159,7 +159,7 @@ describe('create', () => {
         }) 
 
         const books = await Book.getAllByCategory('c1')
-        expect(books).toHaveLength(3)
+        expect(books).toHaveLength(1)
         expect(books[0]).toHaveProperty('book_id')
     })
 

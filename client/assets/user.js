@@ -34,6 +34,7 @@ const displayModal = (data) => {
   <div class="modal-content flex flex-col  bg-white mx-auto p-5 border-2 border-slate-500 max-w-2xl relative">
           <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
           <div class="flex flex-col ">
+
           <img class="w-3/6 mx-auto object-cover" src=${
             data.book_image
           } alt="book cover"/>

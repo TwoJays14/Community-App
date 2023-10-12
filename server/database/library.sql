@@ -31,10 +31,9 @@ CREATE TABLE books (
 CREATE TABLE reserved_books (
   reserve_id INT GENERATED ALWAYS AS IDENTITY,
   book_id INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (reserve_id),
-  FOREIGN KEY (user_id) REFERENCES user_account(user_id),
-  FOREIGN KEY (book_id) REFERENCES books(book_id)
+  FOREIGN KEY (user_id) REFERENCES user_account(user_id)
 );
 CREATE TABLE token (
   token_id INT GENERATED ALWAYS AS IDENTITY,
