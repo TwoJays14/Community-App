@@ -217,13 +217,17 @@ const displayModal = (data) => {
             </div>
 
 
-          ${
-            data.reserved
-              ? `
-              <button id="return-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Return</button>
-              `
-              : `<button id="reserve-btn" data-id=${data.book_id} class="py-2 px-6 bg-indigo-500 text-white">Reserve</button>`
-          }
+          
+              <button 
+              id="${data.reserved ? `return-btn` : `reserve-btn`}" data-id=${
+    data.book_id
+  } class="py-2 px-6 bg-indigo-500 text-white">${
+    data.reserved ? `Return` : `Reserve`
+  }
+              </button>
+              
+
+          
           
         </div>
   `;
@@ -309,3 +313,6 @@ getFiction.addEventListener('click', () => filterBook('Fiction'));
 getBMS.addEventListener('click', () => filterBook('Body, Mind & Spirit'));
 getFantasy.addEventListener('click', () => filterBook('Fantasy'));
 getHistory.addEventListener('click', () => filterBook('History'));
+
+// export { displayModal, displayFilteredBooks, filterBook };
+// things to do 1) add more fetches from google books api to have 40 results for each category of book 2) Display reserved books on user page 3) Add headers and footers to all pages linking site together 4) Styling 5)Testing 6) Presentation 7) Wireframeing
