@@ -10,6 +10,7 @@ class Book {
     author,
     publisher,
     category,
+    book_description,
     isbn,
     num_pages,
     publish_date,
@@ -23,6 +24,7 @@ class Book {
     this.author = author;
     this.publisher = publisher;
     this.category = category;
+    this.book_description = book_description;
     this.isbn = isbn;
     this.num_pages = num_pages;
     this.publish_date = publish_date;
@@ -94,11 +96,12 @@ class Book {
       available_books,
     } = data;
     const response = await db.query(
-      'INSERT INTO books (title, author, category, publisher, isbn, num_pages, publish_date, book_image, available_books) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      'INSERT INTO books (title, author, category, book_description, publisher, isbn, num_pages, publish_date, book_image, available_books) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
       [
         title,
         author,
         category,
+        book_description,
         publisher,
         isbn,
         num_pages,
@@ -117,6 +120,7 @@ class Book {
       title,
       author,
       category,
+      book_description,
       publisher,
       isbn,
       num_pages,
@@ -125,11 +129,12 @@ class Book {
       available_books,
     } = data;
     const response = await db.query(
-      'UPDATE books SET title = $1, author = $2, category = $3, publisher = $4, isbn = $5, num_pages = $6, publish_date = $7, book_image = $8, available_books = $9 WHERE book_id = $10 RETURNING *;',
+      'UPDATE books SET title = $1, author = $2, category = $3, book_description = $4, publisher = $5, isbn = $6, num_pages = $7, publish_date = $8, book_image = $9, available_books = $10 WHERE book_id = $10 RETURNING *;',
       [
         title,
         author,
         category,
+        book_description,
         publisher,
         isbn,
         num_pages,
