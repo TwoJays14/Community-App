@@ -32,7 +32,6 @@ class Reserve {
 
     async destroy () {
         const response = await db.query("WITH deleted_rows AS (DELETE FROM reserved_books WHERE book_id = $1 RETURNING *) UPDATE books SET reserved = false WHERE book_id = $1 RETURNING *;", [this.book_id])
-
           return new Reserve(response.rows[0]);
     }
 } 
