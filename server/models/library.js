@@ -129,7 +129,7 @@ class Book {
       available_books,
     } = data;
     const response = await db.query(
-      'UPDATE books SET title = $1, author = $2, category = $3, book_description = $4, publisher = $5, isbn = $6, num_pages = $7, publish_date = $8, book_image = $9, available_books = $10 WHERE book_id = $10 RETURNING *;',
+      'UPDATE books SET title = $1, author = $2, category = $3, book_description = $4, publisher = $5, isbn = $6, num_pages = $7, publish_date = $8, book_image = $9, available_books = $10 WHERE book_id = $11 RETURNING *;',
       [
         title,
         author,
@@ -169,7 +169,7 @@ async reserveBook () {
 
   async returnBook() {
     const response = await db.query(
-      'UPDATE books SET available_books = available_books + 1, reserved = false WHERE reserved = true AND book_id = $1 RETURNING *;',
+      'UPDATE books SET available_books = available_books + 1 WHERE reserved = false AND book_id = $1 RETURNING *;',
       [this.book_id]
     );
     if (response.rows.length != 1) {
