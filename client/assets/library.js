@@ -4,7 +4,7 @@ const getAll = document.getElementById('all');
 const getNature = document.getElementById('nature');
 const getScience = document.getElementById('science');
 const getFiction = document.getElementById('fiction');
-const getBMS = document.getElementById('BMS');
+const getPhilosophy = document.getElementById('philosophy');
 const getFantasy = document.getElementById('fantasy');
 const getHistory = document.getElementById('history');
 
@@ -108,8 +108,8 @@ search.addEventListener('click', async () => {
   const data = await res.json();
 
   const filteredData = data.filter((book) => {
-    const title = book.title.toLowerCase();
-    const author = book.author.toLowerCase();
+    const title = (book.title || '').toLowerCase();
+    const author = (book.author || '').toLowerCase();
 
     return title.includes(searchInput) || author.includes(searchInput);
   });
@@ -126,8 +126,8 @@ searchInput.addEventListener('input', async (e) => {
   const data = await res.json();
 
   const filteredData = data.filter((book) => {
-    const title = book.title.toLowerCase();
-    const author = book.author.toLowerCase();
+    const title = (book.title || '').toLowerCase();
+    const author = (book.author || '').toLowerCase();
 
     return title.includes(searchValue) || author.includes(searchValue);
   });
@@ -167,7 +167,7 @@ function displaySearchedBooks(data) {
 
 const displayModal = (data) => {
   modal.innerHTML = `
-  <div class="modal-content flex flex-col  bg-white mx-auto p-5 border-2 border-slate-500 max-w-2xl relative">
+  <div class="modal-content flex flex-col   bg-white mx-auto p-4 border-2 border-slate-500 max-w-2xl relative">
           <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
           <div class="flex flex-col ">
           <img class="w-3/6 mx-auto object-cover" src=${
@@ -183,7 +183,14 @@ const displayModal = (data) => {
             <h2 class="font-bold">Author</h2>
             <p>${data.author}</p>
             </div>
-            
+
+           <div class="flex flex-col items-center">
+            <h2 class="font-bold">Description</h2>
+            <p>${data.book_description}</p>
+            </div>
+
+            <div class="flex justify-around items-center">
+
             <div class="flex flex-col  items-center">
             <h2 class="font-bold">Category</h2>
             <p>${data.category}</p>
@@ -198,6 +205,10 @@ const displayModal = (data) => {
             <h2 class="font-bold">ISBN</h2>
             <p>${data.isbn}</p>
             </div>
+            
+            </div>
+
+            <div class="flex justify-around items-center">
 
             <div class="flex flex-col items-center">
             <h2 class="font-bold">Number of Pages</h2>
@@ -214,6 +225,10 @@ const displayModal = (data) => {
             <h2 class="font-bold">Available Books</h2>
             <p>${data.available_books}</p>
             </div>
+
+            </div>
+
+            
 
 
           
@@ -318,7 +333,7 @@ getAll.addEventListener('click', () => filterBook('all'));
 getNature.addEventListener('click', () => filterBook('nature'));
 getScience.addEventListener('click', () => filterBook('Science'));
 getFiction.addEventListener('click', () => filterBook('Fiction'));
-getBMS.addEventListener('click', () => filterBook('Body, Mind & Spirit'));
+getPhilosophy.addEventListener('click', () => filterBook('Philosophy'));
 getFantasy.addEventListener('click', () => filterBook('Fantasy'));
 getHistory.addEventListener('click', () => filterBook('History'));
 
