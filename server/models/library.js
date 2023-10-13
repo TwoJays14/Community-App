@@ -86,7 +86,6 @@ class Book {
       title,
       author,
       category,
-      book_description,
       publisher,
       isbn,
       num_pages,
@@ -167,7 +166,7 @@ class Book {
 
   async returnBook() {
     const response = await db.query(
-      'UPDATE books SET available_books = available_books + 1 WHERE reserved = true AND book_id = $1 RETURNING *;',
+      'UPDATE books SET available_books = available_books + 1 WHERE reserved = false AND book_id = $1 RETURNING *;',
       [this.book_id]
     );
     if (response.rows.length != 1) {
