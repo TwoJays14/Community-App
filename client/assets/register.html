@@ -9,20 +9,85 @@
     <title>Login</title>
   </head>
   <body
-    class="bg-slate-400 h-[100vh] bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]"
+    class="relative bg-slate-400 h-[100vh] bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]"
   >
-    <section class="h-full max-w-2xl mx-auto flex flex-col justify-center">
+    <!-- Navbar -->
+    <div
+      class="flex justify-around w-screen mx-auto pb-10 bg-florin-red items-center text-white mb-[50px]"
+    >
+      <ul class="flex justify-around w-full mt-4">
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+          >
+            Home</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >Services</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >About</a
+          >
+        </li>
+      </ul>
+      <div class="flex flex-col w-full items-center mt-3">
+        <img
+          class="w-[50px]"
+          src="https://images.vexels.com/media/users/3/224155/isolated/lists/f4bbe191bcc833b27d7fa241220c470e-book-on-screen-logo.png"
+          alt="library"
+        />
+        <h1 class="text-xl font-bold">Florin & Burkes Council</h1>
+      </div>
+      <ul class="flex justify-around w-full mt-4">
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >Contact Us</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./library.html"
+            >Library</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./user.html"
+            >Profile</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Navbar end -->
+    <section class="max-w-2xl mx-auto">
       <h3 class="text-xl uppercase text-center mb-3">start for free</h3>
       <h1 class="capitalize font-bold text-3xl text-center mb-3">
         create new account
       </h1>
       <h4 class="capitalize text-center mb-3">
         already a member?
-        <a class="capitalize text-indigo-500" href="./login.html">log in</a>
+        <a
+          class="capitalize text-florin-red-light hover:text-florin-red active:text-florin-red-dark"
+          href="./login.html"
+          >log in</a
+        >
       </h4>
 
       <form id="sign-up" class="flex flex-col w-full">
-      
         <input
           class="mx-auto mb-3 p-3 rounded-xl w-full"
           type="text"
@@ -30,7 +95,6 @@
           id="username"
           placeholder="Username"
         />
-      
 
         <input
           type="password"
@@ -39,9 +103,9 @@
           placeholder="Password"
           class="mx-auto mb-3 p-3 rounded-xl w-full"
         />
-    
+
         <button
-          class="bg-indigo-500 py-4 px-2 text-white mx-auto rounded-xl w-full"
+          class="bg-florin-red-light hover:bg-florin-red active:bg-florin-red-dark transition-all py-4 px-2 text-white mx-auto rounded-xl w-full"
           type="submit"
         >
           Create Account

@@ -11,14 +11,80 @@
   <body
     class="bg-slate-400 h-[100vh] bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)]"
   >
-    <section class="h-full max-w-2xl mx-auto flex flex-col justify-center">
+    <!-- Navbar -->
+    <div
+      class="flex justify-around w-screen mx-auto pb-10 bg-florin-red items-center text-white mb-[50px]"
+    >
+      <ul class="flex justify-around w-full mt-4">
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+          >
+            Home</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >Services</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >About</a
+          >
+        </li>
+      </ul>
+      <div class="flex flex-col w-full items-center mt-3">
+        <img
+          class="w-[50px]"
+          src="https://images.vexels.com/media/users/3/224155/isolated/lists/f4bbe191bcc833b27d7fa241220c470e-book-on-screen-logo.png"
+          alt="library"
+        />
+        <h1 class="text-xl font-bold">Florin & Burkes Council</h1>
+      </div>
+      <ul class="flex justify-around w-full mt-4">
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./index.html"
+            >Contact Us</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./library.html"
+            >Library</a
+          >
+        </li>
+        <li>
+          <a
+            class="text-xl font-bold hover:border-b-2 pb-2 hover:border-white"
+            href="./user.html"
+            >Profile</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Navbar end -->
+    <section class="h-full max-w-2xl mx-auto">
       <h2 class="text-3xl uppercase text-center mb-3">
         welcome to florin city library
       </h2>
       <h1 class="capitalize font-bold text-3xl text-center mb-3">login</h1>
       <h4 class="capitalize text-center mb-3">
         Don't have an account?
-        <a class="capitalize text-indigo-500" href="register.html">sign up</a>
+        <a
+          class="capitalize text-florin-red-light hover:text-florin-red active:text-florin-red-dark"
+          href="register.html"
+          >sign up</a
+        >
       </h4>
 
       <form id="login" class="flex flex-col w-full">
@@ -38,7 +104,7 @@
           class="mx-auto mb-3 p-3 rounded-xl w-full"
         />
         <button
-          class="bg-indigo-500 py-4 px-2 text-white mx-auto rounded-xl w-full"
+          class="bg-florin-red-light hover:bg-florin-red active:bg-florin-red-dark py-4 px-2 text-white mx-auto rounded-xl w-full"
           type="submit"
         >
           Login
