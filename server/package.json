@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node./database/setup.js && node index.js ",
+    "start": "node ./database/setup.js && node index.js ",
     "dev": "nodemon index.js",
     "setup-db": "node ./database/setup.js",
     "test": "jest --watchAll --detectOpenHandles --runInBand --verbose --coverage"
