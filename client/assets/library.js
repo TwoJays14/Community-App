@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 const getAll = document.getElementById('all');
 const getNature = document.getElementById('nature');
