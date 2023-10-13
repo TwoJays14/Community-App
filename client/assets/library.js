@@ -304,7 +304,7 @@ const displayModal = (data) => {
             },
           };
 
-          const res2 = await fetch('http://localhost:3000/reserve/', options2);
+          const res2 = await fetch(`http://localhost:3000/reserve/${id}`, options2);
           const data2 = await res2.json();
 
           console.log(data2);
