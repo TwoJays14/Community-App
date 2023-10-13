@@ -174,62 +174,64 @@ function displaySearchedBooks(data) {
 // Modal
 
 const displayModal = (data) => {
+  const fullDate = data.publish_date;
+  const datePortion = fullDate.substring(0, 10);
   modal.innerHTML = `
   <div class="modal-content flex flex-col   bg-white mx-auto p-4 border-2 border-slate-500 max-w-2xl relative">
-          <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-10 h-10"/>
+          <img src='./circle-xmark.svg' class=" close absolute top-0 right-0 p-3 cursor-pointer w-10 h-10"/>
           <div class="flex flex-col ">
           <img class="w-3/6 mx-auto object-cover" src=${
             data.book_image
           } alt="book cover"/>
 
-          <div class="flex flex-col items-center">
+          <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Book Title</h2>
             <p>${data.title}</p>
            </div>
 
-           <div class="flex flex-col items-center">
+           <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Author</h2>
             <p>${data.author}</p>
             </div>
 
-           <div class="flex flex-col items-center">
+           <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Description</h2>
             <p>${data.book_description}</p>
             </div>
 
-            <div class="flex justify-around items-center">
+            <div class="my-2 flex justify-around gap-6 items-center">
 
-            <div class="flex flex-col  items-center">
+            <div class="mb-2 flex flex-col  items-center">
             <h2 class="font-bold">Category</h2>
             <p>${data.category}</p>
             </div>
             
-            <div class="flex flex-col items-center">
+            <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Publisher</h2>
             <p>${data.publisher}</p>
             </div>
 
-            <div class="flex flex-col items-center">
+            <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">ISBN</h2>
             <p>${data.isbn}</p>
             </div>
             
             </div>
 
-            <div class="flex justify-around items-center">
+            <div class="my-2 flex justify-around gap-6 items-center">
 
-            <div class="flex flex-col items-center">
+            <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Number of Pages</h2>
             <p>${data.num_pages}</p>
             </div>
 
-            <div class="flex flex-col items-center">
+            <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Publish Date</h2>
-            <p>${data.publish_date}</p>
+            <p>${datePortion}</p>
             </div>
             
             
-            <div class="flex flex-col items-center">
+            <div class="mb-2 flex flex-col items-center">
             <h2 class="font-bold">Available Books</h2>
             <p>${data.available_books}</p>
             </div>
@@ -243,7 +245,7 @@ const displayModal = (data) => {
               <button 
               id="${data.reserved ? `return-btn` : `reserve-btn`}" data-id=${
     data.book_id
-  } class="py-2 px-6 bg-indigo-500 text-white">${
+  } class="py-2 px-6 bg-florin-red-light hover:bg-florin-red active:bg-florin-red-dark  text-white">${
     data.reserved ? `Return` : `Reserve`
   }
               </button>
@@ -312,7 +314,10 @@ const displayModal = (data) => {
             },
           };
 
-          const res2 = await fetch(`http://localhost:3000/reserve/${id}`, options2);
+          const res2 = await fetch(
+            `http://localhost:3000/reserve/${id}`,
+            options2
+          );
           const data2 = await res2.json();
 
           console.log(data2);
