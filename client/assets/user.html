@@ -10,10 +10,42 @@
   </head>
   <body>
     <div class="container max-w-7xl">
+      <div class="flex justify-around">
+        <ul class="flex justify-around w-full mt-4">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Gallery</a></li>
+        </ul>
+        <div class="flex flex-col w-full items-center mt-3">
+          <img
+            class="w-[50px]"
+            src="https://images.vexels.com/media/users/3/224155/isolated/lists/f4bbe191bcc833b27d7fa241220c470e-book-on-screen-logo.png"
+            alt="library"
+          />
+          Florin City Library
+        </div>
+        <ul class="flex justify-around w-full mt-4">
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="./register.html">Register</a></li>
+          <li><a href="./login.html">Login</a></li>
+        </ul>
+      </div>
+
       <h1>Profile</h1>
       <h2>Jermaine Jatau</h2>
       <h2>Reserved Books</h2>
-      <div></div>
+
+      <div
+        class="grid justify-items-center items-center grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 py-8 px-0 max-w-full"
+        id="books"
+      ></div>
+
+      <!-- Modal -->
+      <div
+        id="modal"
+        class="modal hidden fixed z-10 left-0 top-0 w-screen h-screen overflow-auto bg-[rgba(0,0,0,0.7)]"
+      ></div>
     </div>
   </body>
 </html>
