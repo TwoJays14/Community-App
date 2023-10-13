@@ -6,7 +6,7 @@ const reserveRouter = Router();
 
 reserveRouter.get("/", reserveController.index)
 reserveRouter.get('/:id', reserveController.showID)
-reserveRouter.post("/", reserveController.create)
+reserveRouter.post("/:id", reserveController.create)
 reserveRouter.delete("/:id", reserveController.destroy)
 
 module.exports = reserveRouter

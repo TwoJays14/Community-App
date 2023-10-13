@@ -148,14 +148,11 @@ function displaySearchedBooks(data) {
 
   data.forEach((book) => {
     const bookHTML = `
-      <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center object-cover" data-id=${book.book_id}>
-      <img src=${book.book_image} alt="book cover"/>
-
-      <div class="flex flex-col justify-center items-center py-2 text-center text-md">
-      <h2 class="font-bold">${book.title}</h2>
-      <p class="py-4">${book.author}</p>
+      <div id='bookList' class="cursor-pointer" data-id=${book.book_id}>
+        <img class="sm: w-1/8 xl:w-3/6 2xl:w-1/6 object-cover" src=${book.book_image} alt="book cover"/>
+        <h2 class="book-name">${book.title}</h2>
+        <p>${book.author}</p>
       </div>
-    </div>
     `;
 
     filteredHTML += bookHTML;
@@ -268,30 +265,60 @@ const displayModal = (data) => {
 
   // Reserve Button Functionality
   const reserveButton = document.querySelector('#reserve-btn');
+
   if (reserveButton) {
     reserveButton.addEventListener('click', async () => {
-      const options = {
-        method: 'PATCH',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      };
+      try {
+        const options = {
+          method: 'PATCH',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        };
 
-      const { id } = reserveButton.dataset;
-      console.log(id);
-      const res = await fetch(
-        `http://localhost:3000/library/reserve/${id}`,
-        options
-      );
-      const data = await res.json();
-      console.log(data);
+        const { id } = reserveButton.dataset;
+        console.log(id);
 
-      if (res.status == 200) {
-        console.log('succesfully reserved book');
-        reservedBooks.push(data);
-        localStorage.setItem('reserved', JSON.stringify(reservedBooks));
-        displayModal(data);
+        const isBookReserved = reservedBooks.some(
+          (book) => book.book_id === id
+        );
+
+        if (isBookReserved) {
+          console.log('Book is already reserved.');
+          return; // Exit if the book is already reserved
+        }
+
+        // First Fetch - Wait for it to complete
+        const res = await fetch(
+          `http://localhost:3000/library/reserve/${id}`,
+          options
+        );
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status === 200) {
+          console.log('successfully reserved book');
+          reservedBooks.push(data);
+          localStorage.setItem('reserved', JSON.stringify(reservedBooks));
+          displayModal(data);
+
+          // Second Fetch - Initiate it after the first one
+          const options2 = {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          };
+
+          const res2 = await fetch(`http://localhost:3000/reserve/${id}`, options2);
+          const data2 = await res2.json();
+
+          console.log(data2);
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
     });
   }
@@ -302,7 +329,7 @@ const displayModal = (data) => {
   if (returnButton) {
     returnButton.addEventListener('click', async () => {
       const options = {
-        method: 'PATCH',
+        method: 'DELETE',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -311,28 +338,80 @@ const displayModal = (data) => {
 
       const { id } = returnButton.dataset;
 
-      const res = await fetch(
-        `http://localhost:3000/library/return/${id}`,
-        options
-      );
-      const data = await res.json();
-      console.log(data);
+      const res = await fetch(`http://localhost:3000/reserve/${id}`, options);
+
+      // const data = await res.json();
+
+      const response = await fetch(`http://localhost:3000/library/${id}`);
+      const data3 = await response.json();
+      console.log(data3);
 
       if (res.status == 200) {
         console.log('succesfully returned book');
-        const bookId = data.book_id;
-        const updatedReservedBooks = reservedBooks.filter(
-          (book) => book.book_id !== bookId
+
+        const optionsAddOne = {
+          method: 'PATCH',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        };
+        const resAddOne = await fetch(
+          `http://localhost:3000/library/return/${id}`,
+          optionsAddOne
         );
-        reservedBooks = updatedReservedBooks;
-        localStorage.setItem('reserved', JSON.stringify(reservedBooks));
-        displayModal(data);
+        const dataAddOne = await resAddOne.json();
+        console.log();
+        // const bookId = data.book_id;
+        // const updatedReservedBooks = reservedBooks.filter(
+        //   (book) => book.book_id !== bookId
+        // );
+        // reservedBooks = updatedReservedBooks;
+        // localStorage.setItem('reserved', JSON.stringify(reservedBooks));
+        displayModal(dataAddOne);
       }
     });
   }
 };
 
 let reservedBooks = [];
+
+// first fetch
+
+async function firstFetch() {
+  const options = {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const { id } = reserveButton.dataset;
+  console.log(id);
+  const res = await fetch(
+    `http://localhost:3000/library/reserve/${id}`,
+    options
+  );
+  const data = await res.json();
+  console.log(data);
+}
+
+// second fetch
+async function secondFetch(data) {
+  const options2 = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const res2 = await fetch('http:localhost:3000/reserve/', options2);
+  const data2 = await res2.json();
+
+  console.log(data2);
+}
 
 // Global functions
 

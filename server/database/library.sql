@@ -29,12 +29,21 @@ CREATE TABLE books (
 );
 
 CREATE TABLE reserved_books (
-  reserve_id INT GENERATED ALWAYS AS IDENTITY,
-  book_id INT NOT NULL,
-  user_id INT,
-  PRIMARY KEY (reserve_id),
-  FOREIGN KEY (user_id) REFERENCES user_account(user_id)
+    reserve_id INT GENERATED ALWAYS AS IDENTITY,
+    book_id INT NOT NULL,
+    PRIMARY KEY (reserve_id),
+    title VARCHAR NOT NULL ,
+    author VARCHAR,
+    category VARCHAR,
+    book_description VARCHAR,
+    publisher VARCHAR,
+    isbn VARCHAR,
+    num_pages INT, 
+    publish_date DATE, 
+    book_image VARCHAR, 
+    available_books INT NOT NULL
 );
+
 CREATE TABLE token (
   token_id INT GENERATED ALWAYS AS IDENTITY,
   user_id INT NOT NULL,
