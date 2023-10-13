@@ -61,7 +61,7 @@ async function google(search) {
       date = null;
     }
     let image = book.volumeInfo.imageLinks.thumbnail;
-    let available_books = 2;
+    let available_books = Math.floor(Math.random() * 10) + 1;
     await db.query(
       'INSERT INTO books (title, author, category, book_description, publisher, isbn, num_pages, publish_date, book_image, available_books) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;',
       [
