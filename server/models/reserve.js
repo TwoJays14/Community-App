@@ -13,7 +13,7 @@ class Reserve {
     num_pages,
     publish_date,
     book_image,
-    available_books,
+    available_books
   }) {
     this.reserve_id = reserve_id;
     this.book_id = book_id;
@@ -48,10 +48,14 @@ class Reserve {
     return new Reserve(response.rows[0]);
   }
 
-  static async create() {
-    const response = await db.query(
-      'INSERT INTO reserved_books (book_id, title, author, category, book_description, publisher, isbn, num_pages, publish_date, book_image, available_books) SELECT book_id, title, author, category, book_description, publisher, isbn, num_pages, publish_date, book_image, available_books FROM books WHERE reserved = true RETURNING *;'
-    );
+  static async create(bookId) {
+    const response = await db.query(`
+      INSERT INTO reserved_books (book_id, title, author, category, book_description, publisher, isbn, num_pages, publish_date, book_image, available_books)
+      SELECT b.book_id, b.title, b.author, b.category, b.book_description, b.publisher, b.isbn, b.num_pages, b.publish_date, b.book_image, b.available_books
+      FROM books AS b
+      WHERE b.book_id = $1
+      RETURNING *;
+    `, [bookId]);
     return new Reserve(response);
   }
 

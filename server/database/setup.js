@@ -38,9 +38,9 @@ async function google(search) {
     } else {
       isbn = null;
     }
-    //let isbn = book.volumeInfo.industryIdentifiers.identifier || null
+
     let num_pages = book.volumeInfo.pageCount || null;
-    //let publish_date = book.volumeInfo.publishedDate || null
+    
     let date;
     if (
       book.volumeInfo.publishedDate != undefined &&
@@ -85,13 +85,12 @@ const sql = fs.readFileSync(__dirname + '/library.sql').toString();
 db.query(sql)
   .then((data) => {
     google('subject:science').then();
-    // google('subject:fiction').then();
-    // google("subject:geography").then()
-    // google("subject:fantasy").then()
-    // google("subject:history").then()
-    // google('subject:nature').then(() => {
+    google('subject:fiction').then();
+    google("subject:geography").then()
+    google("subject:fantasy").then()
+    google('subject:nature').then(() => {
       db.end();
       console.log('Setup complete');
     })
   // })
-  .catch((error) => console.log(error));
+  .catch((error) => console.log(error))});

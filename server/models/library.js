@@ -1,7 +1,5 @@
 const db = require('../database/connect');
 require('dotenv').config();
-const apiKey = process.env.apiKey;
-
 class Book {
   constructor({
     book_id,

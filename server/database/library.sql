@@ -29,10 +29,10 @@ CREATE TABLE books (
 );
 
 CREATE TABLE reserved_books (
-  reserve_id INT GENERATED ALWAYS AS IDENTITY,
-  book_id INT NOT NULL,
-  PRIMARY KEY (reserve_id),
-  title VARCHAR UNIQUE NOT NULL ,
+    reserve_id INT GENERATED ALWAYS AS IDENTITY,
+    book_id INT NOT NULL,
+    PRIMARY KEY (reserve_id),
+    title VARCHAR NOT NULL ,
     author VARCHAR,
     category VARCHAR,
     book_description VARCHAR,
