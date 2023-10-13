@@ -152,18 +152,17 @@ class Book {
     return new Book(response.rows[0]);
   }
 
-
-async reserveBook () {
-  const response = await db.query("UPDATE books SET available_books = available_books -1, reserved = true WHERE reserved = false AND book_id = $1 RETURNING *;",
-         [this.book_id]);
+  async reserveBook() {
+    const response = await db.query(
+      'UPDATE books SET available_books = available_books -1, reserved = true WHERE reserved = false AND book_id = $1 RETURNING *;',
+      [this.book_id]
+    );
 
     if (response.rows.length != 1) {
       throw new Error('Unable to update books.');
     } else if (this.available_books <= 0) {
-
-      throw new Error("Unable to reserve as no books available")
-    } 
-
+      throw new Error('Unable to reserve as no books available');
+    }
 
     return new Book(response.rows[0]);
   }

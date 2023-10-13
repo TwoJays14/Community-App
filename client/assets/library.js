@@ -27,11 +27,16 @@ const getData = async () => {
 const displayAllBooks = (data) => {
   const allData = data.map((d) => {
     return `
-    <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center" data-id=${d.book_id}>
-      <img class="w-full object-cover" src=${d.book_image} alt="book cover"/>
-      <h2>${d.title}</h2>
-      <p>${d.author}</p>
-    </div>`;
+    <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center object-cover" data-id=${d.book_id}>
+      <img src=${d.book_image} alt="book cover"/>
+
+      <div class="flex flex-col justify-center items-center py-2 text-center text-md">
+      <h2 class="font-bold">${d.title}</h2>
+      <p class="py-4">${d.author}</p>
+      </div>
+      
+    </div>
+    `;
   });
 
   books.innerHTML = allData.join('');
@@ -79,11 +84,14 @@ const filterBook = async (value) => {
 const displayFilteredBooks = (data) => {
   const allData = data.map((d) => {
     return `
-  <div id='bookList' class="cursor-pointer" data-id=${d.book_id}>
-  <img class="object-cover w-full" src=${d.book_image} alt="book cover"/>
-    <h2 class="book-name">${d.title}</h2>
-    <p>${d.author}</p>
-  </div>`;
+  <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center object-cover" data-id=${d.book_id}>
+      <img src=${d.book_image} alt="book cover"/>
+
+      <div class="flex flex-col justify-center items-center py-2 text-center text-md">
+      <h2 class="font-bold">${d.title}</h2>
+      <p class="py-4">${d.author}</p>
+      </div>
+    </div>`;
   });
 
   books.innerHTML = allData.join('');
@@ -140,11 +148,14 @@ function displaySearchedBooks(data) {
 
   data.forEach((book) => {
     const bookHTML = `
-      <div id='bookList' class="cursor-pointer" data-id=${book.book_id}>
-        <img class="w-full object-cover" src=${book.book_image} alt="book cover"/>
-        <h2 class="book-name">${book.title}</h2>
-        <p>${book.author}</p>
+      <div id='bookList' class="cursor-pointer flex flex-col justify-center items-center object-cover" data-id=${book.book_id}>
+      <img src=${book.book_image} alt="book cover"/>
+
+      <div class="flex flex-col justify-center items-center py-2 text-center text-md">
+      <h2 class="font-bold">${book.title}</h2>
+      <p class="py-4">${book.author}</p>
       </div>
+    </div>
     `;
 
     filteredHTML += bookHTML;
