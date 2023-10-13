@@ -176,7 +176,7 @@ function displaySearchedBooks(data) {
 const displayModal = (data) => {
   modal.innerHTML = `
   <div class="modal-content flex flex-col   bg-white mx-auto p-4 border-2 border-slate-500 max-w-2xl relative">
-          <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
+          <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-10 h-10"/>
           <div class="flex flex-col ">
           <img class="w-3/6 mx-auto object-cover" src=${
             data.book_image
@@ -361,7 +361,6 @@ const displayModal = (data) => {
           optionsAddOne
         );
         const dataAddOne = await resAddOne.json();
-        console.log();
         // const bookId = data.book_id;
         // const updatedReservedBooks = reservedBooks.filter(
         //   (book) => book.book_id !== bookId
