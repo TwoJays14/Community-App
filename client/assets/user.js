@@ -29,12 +29,24 @@ const displayAllBooks = (data) => {
   });
 };
 
+const fetchReservedBooks = async () => {
+  const res = await fetch(`http://localhost:3000/reserve/`);
+  const data = await res.json();
+
+  console.log(data);
+  displayAllBooks(data);
+};
+
+fetchReservedBooks();
+
 const displayModal = (data) => {
   modal.innerHTML = `
   <div class="modal-content flex flex-col  bg-white mx-auto p-5 border-2 border-slate-500 max-w-2xl relative">
           <img src='./circle-xmark.svg' class="close absolute top-0 right-0 p-3 cursor-pointer w-6 h-6"/>
           <div class="flex flex-col ">
-          <img class="w-3/6 mx-auto object-cover" src=${data.book_image} alt="book cover"/>
+          <img class="w-3/6 mx-auto object-cover" src=${
+            data.book_image
+          } alt="book cover"/>
 
           <div class="flex flex-col items-center">
             <h2 class="font-bold">Book Title</h2>
@@ -76,6 +88,14 @@ const displayModal = (data) => {
             <h2 class="font-bold">Available Books</h2>
             <p>${data.available_books}</p>
             </div>
+
+            <button 
+              id="${data.reserved ? `return-btn` : `reserve-btn`}" data-id=${
+    data.book_id
+  } class="py-2 px-6 bg-indigo-500 text-white">${
+    data.reserved ? `Return` : `Reserve`
+  }
+              </button>
           
         </div>
   `;
@@ -88,6 +108,54 @@ const displayModal = (data) => {
   closeModal.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
-};
 
-displayAllBooks(parsedData);
+  // Return Button Functionality
+  const returnButton = document.querySelector('#return-btn');
+
+  if (returnButton) {
+    returnButton.addEventListener('click', async () => {
+      const options = {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { id } = returnButton.dataset;
+
+      const res = await fetch(`http://localhost:3000/reserve/${id}`, options);
+
+      // const data = await res.json();
+
+      const response = await fetch(`http://localhost:3000/library/${id}`);
+      const data3 = await response.json();
+      console.log(data3);
+
+      if (res.status == 200) {
+        console.log('succesfully returned book');
+
+        const optionsAddOne = {
+          method: 'PATCH',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        };
+        const resAddOne = await fetch(
+          `http://localhost:3000/library/return/${id}`,
+          optionsAddOne
+        );
+        const dataAddOne = await resAddOne.json();
+
+        // const bookId = data.book_id;
+        // const updatedReservedBooks = reservedBooks.filter(
+        //   (book) => book.book_id !== bookId
+        // );
+        // reservedBooks = updatedReservedBooks;
+        // localStorage.setItem('reserved', JSON.stringify(reservedBooks));
+        displayModal(dataAddOne);
+      }
+    });
+  }
+};

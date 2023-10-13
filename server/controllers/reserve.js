@@ -21,7 +21,8 @@ async function showID (req, res) {
 
 async function create (req, res) {
     try {
-        const reserve = await Reserve.create()
+        let id = parseInt(req.params.id)
+        const reserve = await Reserve.create(id)
         res.status(201).json(reserve)
     } catch (err) {
         res.status(400).json({error: err.message})
