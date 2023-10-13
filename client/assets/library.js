@@ -339,7 +339,7 @@ const displayModal = (data) => {
       console.log(data3);
 
       if (res.status == 200) {
-        console.log('succesfully returned book');
+        console.log('successfully returned book');
 
         const optionsAddOne = {
           method: 'PATCH',
